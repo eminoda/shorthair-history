@@ -53,7 +53,8 @@
 - [ ] 多业务线解析规则
 
 # 参考
+[Baidu h5 制作](https://h5.bce.baidu.com)
+[页面可视化搭建工具前生今世——掘金](https://juejin.im/post/5b0324f4518825426a20008d)
 [vue-mintui 效果展示](https://github.com/mint-ui/docs/blob/master/src/components/phone.vue)
 [virtual document VNode实现](https://segmentfault.com/a/1190000008291645)
-[页面可视化搭建工具前生今世——掘金](https://juejin.im/post/5b0324f4518825426a20008d)
-[Baidu h5 制作](https://h5.bce.baidu.com)
+[koa和egg项目webpack内存编译和热更新实现——segmentfault](https://segmentfault.com/a/1190000009377030)
