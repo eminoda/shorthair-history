@@ -9,7 +9,4 @@ app.use(middleware);
 app.use(router.routes())
     .use(router.allowedMethods());
 
-app.use(ctx => {
-    ctx.body = 'start koa server';
-})
 export default app;

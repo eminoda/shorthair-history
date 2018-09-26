@@ -10,14 +10,17 @@
     "koa": "^2.5.3",
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
+    "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "@types/koa-bodyparser": "^5.0.1",
+    "supervisor": "^0.12.0",
     "tslib": "^1.9.3",
     "typescript": "^3.0.3"
   },
   "scripts": {
+    "start": "supervisor node ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "eminoda",
