@@ -1,4 +1,4 @@
 /showcase
-/app
+/app/node_modules
 /server/node_modules
 /server/package-lock.json
