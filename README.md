@@ -25,12 +25,11 @@
 ## 功能简介
 ![简介](./doc/market.png)
 
+# 代码说明
+
+
 # TODO LIST
 待解决问题
-- [ ] 技术栈选型
-- [ ] 实现类似JSFiddle等效果
-- [ ] 页面效果实现
-- [ ] 域名的代理、解析
 
 框架
 - [ ] 项目框架搭建 Koa
@@ -54,7 +53,11 @@
 
 # 参考
 [Baidu h5 制作](https://h5.bce.baidu.com)
+
 [页面可视化搭建工具前生今世——掘金](https://juejin.im/post/5b0324f4518825426a20008d)
+
 [vue-mintui 效果展示](https://github.com/mint-ui/docs/blob/master/src/components/phone.vue)
+
 [virtual document VNode实现](https://segmentfault.com/a/1190000008291645)
+
 [koa和egg项目webpack内存编译和热更新实现——segmentfault](https://segmentfault.com/a/1190000009377030)
