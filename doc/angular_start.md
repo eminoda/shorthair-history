@@ -28,6 +28,14 @@ ng generate service ./page/page
 ng generate module app-routing --flat -m=app
 ````
 
+ui库
+````
+ng add ng-zorro-antd --theme
+````
+
+## [使用的一些问题](./angular_question.md)
+
 ## 插件（vscode）
 - Auto Import
 - Angular v6 Snippets
+- ng-zorro snippets

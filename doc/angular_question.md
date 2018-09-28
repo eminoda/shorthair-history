@@ -39,3 +39,10 @@ import { RouterModule, Routes } from '@angular/router';
 ## (不要在constructor调用某些function做初始化)[https://angular.io/tutorial/toh-pt4#call-it-in-ngoninit]
 构造函数简单用于属性赋值，不应该做方法的调用。甚至异步http等请求。
 最佳实践放在lifecycle hook处理。
+
+## 如何引入UI库（ng-zorro）
+执行如下命令即可，建议在新建项目时执行，因为会对原有项目部分文件自动做修改
+````
+ng add ng-zorro-antd
+````
+当然也可以通过 npm install xx来执行，需要自行配置，[点击查看官网即可](https://ng.ant.design/docs/getting-started/zh)
