@@ -1,0 +1,10 @@
+<div>
+  <h3>list</h3>
+  <div *ngFor="let page of pages">
+    <!-- <span [class.selected]="page==selectPage" (click)="onSelect(page)">{{page.id}}:{{page.name}}</span> -->
+    <a routerLink="/page/{{page.id}}">{{page.id}}:{{page.name}}</a>
+  </div>
+
+  <!-- <h3>detail</h3>
+  <app-page-detail [page]="selectPage"></app-page-detail> -->
+</div>
