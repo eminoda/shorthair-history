@@ -11,6 +11,23 @@
 ````
 npm install -g @angular/cli
 
-ng new my-app
+ng new app-client
 ````
 
+启动
+````
+cd app-client
+ng serve --open
+````
+
+文件新增
+````
+ng generate class model/page
+ng generate component pages
+ng generate service ./page/page
+ng generate module app-routing --flat -m=app
+````
+
+## 插件（vscode）
+- Auto Import
+- Angular v6 Snippets
