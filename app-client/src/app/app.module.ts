@@ -5,6 +5,15 @@ import { AppComponent } from './app.component';
 import { PagesComponent } from './page/pages/pages.component';
 import { PageDetailComponent } from './page/page-detail/page-detail.component';
 import { AppRoutingModule } from './app-routing.module';
+// ng-zorro start
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+// ng-zorro end
+
+registerLocaleData(zh);
 
 @NgModule({
   declarations: [
@@ -13,9 +22,9 @@ import { AppRoutingModule } from './app-routing.module';
     PageDetailComponent
   ],
   imports: [
-    BrowserModule, FormsModule, AppRoutingModule
+    BrowserModule, FormsModule, AppRoutingModule, BrowserAnimationsModule, HttpClientModule, NgZorroAntdModule
   ],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
