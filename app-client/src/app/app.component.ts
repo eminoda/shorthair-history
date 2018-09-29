@@ -1,65 +1,39 @@
 import { Menu } from './interface/menu';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { MENUS } from 'src/app/mock/menus';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
 
-  menus: Menu[] = [{
-    type: 'page',
-    url: '/page',
-    name: '页面管理',
-    icon: 'anticon-html5',
-    menus: [{
-      type: 'page',
-      url: '/page/pages',
-      name: '页面查询'
-    }, {
-      type: 'page',
-      url: '/page/draw',
-      name: '页面绘制'
-    }, {
-      type: 'page',
-      url: '/page/templates',
-      name: '模板查询'
-    }]
-  }, {
-    type: 'domain',
-    url: '/page',
-    name: '域名管理',
-    icon: 'anticon-cloud',
-    menus: [{
-      type: 'page',
-      url: '/page/pages',
-      name: '查询域名'
-    }, {
-      type: 'page',
-      url: '/page/draw',
-      name: '修改记录'
-    }, {
-      type: 'page',
-      url: '/page/templates',
-      name: '模板查询'
-    }]
-  }, {
-    type: 'setting',
-    url: '/page',
-    name: '个人设置',
-    icon: 'anticon-setting'
-  }]
+	menus: Menu[] = MENUS;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+	constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit () {
-    this.setBreadCrumb();
-  }
+	ngOnInit () {
+		this.setActivedMenu();
+	}
 
-  setBreadCrumb (): void {
-    console.log(this.route.root);
-  }
+	setActivedMenu (): void {
+		this.router.events.subscribe(event => {
+			if (event instanceof NavigationEnd) {
+				let currentUrl = event.url;
+				for (let parentMenu of this.menus) {
+					if (parentMenu.menus && parentMenu.menus.length > 0) {
+						for (let menu of parentMenu.menus) {
+							if (menu.url == currentUrl) {
+								menu.isActive = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+		})
+	}
 }

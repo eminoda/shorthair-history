@@ -70,3 +70,16 @@ form 标签中需要如果有ngModel，则必须再添加name属性
 
 ## router定义无错，但访问xx链接无法更新xxComponent
 考虑是否有类似 **:id**的配置，会被匹配掉
+
+## 怎么做proxy
+angular.json
+定义proxy文件，proxy.conf.json中和webpack proxy类似配置即可
+````js
+"serve": {
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "browserTarget": "app-client:build",
+    "proxyConfig": "src/proxy.conf.json"
+  }
+}
+````

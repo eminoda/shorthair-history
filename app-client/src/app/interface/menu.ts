@@ -4,4 +4,5 @@ export interface Menu {
     type: string;
     icon?: string;
     menus?: Menu[];
+    isActive?: boolean;
 }

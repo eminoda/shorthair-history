@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://bg.niu100.com",
+    "secure": false
+  }
+}

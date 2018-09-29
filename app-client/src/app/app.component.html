@@ -13,7 +13,7 @@
         <li nz-submenu *ngFor="let menu of menus">
           <span title><i [class]="'anticon '+menu.icon"></i>{{menu.name}}</span>
           <ul *ngIf="menu.menus">
-            <li *ngFor="let item of menu.menus" nz-menu-item [routerLink]="item.url">{{item.name}}</li>
+            <li *ngFor="let item of menu.menus" nz-menu-item [nzSelected]="item.isActive" [routerLink]="item.url">{{item.name}}</li>
           </ul>
         </li>
       </ul>

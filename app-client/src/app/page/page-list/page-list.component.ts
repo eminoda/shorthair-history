@@ -1,3 +1,4 @@
+import { HttpService } from './../../service/http.service';
 import { QueryPageList } from '../../interface/queryPageList';
 import { PAGES } from './../../mock/pages';
 import { Page } from './../../model/page';
@@ -15,7 +16,8 @@ export class PageListComponent implements OnInit {
   pages: Page[];
   selectedPage: Page;
 
-  constructor(private pageService: PageService) { }
+  constructor(private pageService: PageService,
+    private httpService: HttpService) { }
 
   ngOnInit () {
     this.getPages();
@@ -23,7 +25,11 @@ export class PageListComponent implements OnInit {
   // 综合查询
   queryPageList (): void {
     console.log(this.queryPage);
-    // this.queryPage
+    this.httpService.testHttp().subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    })
   }
 
   getPages (): void {
