@@ -4,11 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
 
 @Component({
-  selector: 'app-pages',
-  templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+  selector: 'app-page-list',
+  templateUrl: './page-list.component.html',
+  styleUrls: ['./page-list.component.scss']
 })
-export class PagesComponent implements OnInit {
+export class PageListComponent implements OnInit {
 
   pages: Page[];
   selectPage: Page;

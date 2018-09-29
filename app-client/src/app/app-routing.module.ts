@@ -1,4 +1,4 @@
-import { PagesComponent } from './page/pages/pages.component';
+import { PageListComponent } from './page/page-list/page-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,7 +10,7 @@ const routes: Routes = [{
   pathMatch: 'full'
 }, {
   path: 'pages',
-  component: PagesComponent
+  component: PageListComponent
 }, {
   path: 'page/:id',
   component: PageDetailComponent
