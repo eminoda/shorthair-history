@@ -1,10 +1,89 @@
 <div>
-  <h3>list</h3>
-  <div *ngFor="let page of pages">
-    <!-- <span [class.selected]="page==selectPage" (click)="onSelect(page)">{{page.id}}:{{page.name}}</span> -->
-    <a routerLink="/page/{{page.id}}">{{page.id}}:{{page.name}}</a>
-  </div>
-
-  <!-- <h3>detail</h3>
-  <app-page-detail [page]="selectPage"></app-page-detail> -->
+  <form nz-form nzLayout="horizontal">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="brand">品牌</nz-form-label>
+          <nz-select [(ngModel)]="queryPage.brand" name="brand" nzAllowClear nzPlaceHolder="选择品牌">
+            <nz-option nzValue="1niu" nzLabel="1niu"></nz-option>
+            <nz-option nzValue="2niu" nzLabel="2niu"></nz-option>
+            <nz-option nzValue="3niu" nzLabel="3niu"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="channel">渠道</nz-form-label>
+          <nz-select [(ngModel)]="queryPage.channel" name="channel" nzAllowClear nzPlaceHolder="选择渠道">
+            <nz-option nzValue="c1" nzLabel="c1"></nz-option>
+            <nz-option nzValue="c2" nzLabel="c2"></nz-option>
+            <nz-option nzValue="c3" nzLabel="c3"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="isDeleted">状态</nz-form-label>
+          <nz-select [(ngModel)]="queryPage.isDeleted" name="isDeleted" nzAllowClear nzPlaceHolder="选择状态">
+            <nz-option nzValue="0" nzLabel="未删除"></nz-option>
+            <nz-option nzValue="1" nzLabel="已删除"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="10">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="name">页面名称</nz-form-label>
+          <input name="name" nz-input placeholder="请输入页面名称" [(ngModel)]="queryPage.name">
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="startDate">开始时间</nz-form-label>
+          <nz-date-picker name="startDate" nzFormat="yyyy/MM/dd" [(ngModel)]="queryPage.startDate" nzShowTime></nz-date-picker>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="endDate">结束</nz-form-label>
+          <nz-date-picker name="endDate" nzFormat="yyyy/MM/dd" [(ngModel)]="queryPage.endDate" nzShowTime></nz-date-picker>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="10">
+        <button nz-button nzType="primary" (click)="queryPageList()">查询</button>
+      </div>
+    </div>
+  </form>
 </div>
+
+<nz-table [nzData]="pages" nzTotal="10" nzPageIndex="1" nzPageSize="5" (nzPageIndexChange)="pageChange()"
+  nzFrontPagination=false>
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>品牌</th>
+      <th>渠道</th>
+      <th>访问地址</th>
+      <th>更新日期</th>
+      <th style="text-align: center">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of pages;let index=index">
+      <td>{{index+1}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.brand}}</td>
+      <td>{{item.channel}}</td>
+      <td>{{item.url}}</td>
+      <td>{{item.updateDate| date}}</td>
+      <td>
+        <div nz-row nzType="flex" nzJustify="space-around">
+          <div nz-col><button nz-button nzType="primary">查看详情</button></div>
+          <div nz-col><button nz-button nzType="item.isExported?'dashed':'primary'">导出</button></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

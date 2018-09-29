@@ -1,3 +1,4 @@
+import { QueryPageList } from '../../interface/queryPageList';
 import { PAGES } from './../../mock/pages';
 import { Page } from './../../model/page';
 import { Component, OnInit } from '@angular/core';
@@ -10,13 +11,19 @@ import { PageService } from '../page.service';
 })
 export class PageListComponent implements OnInit {
 
+  queryPage: QueryPageList = {};
   pages: Page[];
-  selectPage: Page;
+  selectedPage: Page;
 
   constructor(private pageService: PageService) { }
 
   ngOnInit () {
     this.getPages();
+  }
+  // 综合查询
+  queryPageList (): void {
+    console.log(this.queryPage);
+    // this.queryPage
   }
 
   getPages (): void {
@@ -25,7 +32,7 @@ export class PageListComponent implements OnInit {
     })
   }
 
-  onSelect (page: Page): void {
-    this.selectPage = page;
+  pageChange (): void {
+    console.log(123);
   }
 }
