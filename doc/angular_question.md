@@ -83,3 +83,12 @@ angular.json
   }
 }
 ````
+
+## Error: Cannot match any routes. URL Segment: 'page/detail'
+区分restful参数和query参数在路由配置上的区别
+````
+[routerLink]="['/page/detail']" [queryParams]="{id:id}" //not i need
+[routerLink]="['/page/detail/'+item.id]"
+````
+
+## 

@@ -1,3 +1,50 @@
-<p>
-  page-detail works!
-</p>
+<form nz-form nzLayout="horizontal">
+	<nz-form-item>
+		<nz-form-label nzFor="name" nzSpan="4" nzRequired>页面名称</nz-form-label>
+		<nz-form-control nzSpan="8">
+			<input name="name" nz-input placeholder="页面名称" [(ngModel)]="page.name">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="url" nzSpan="4" nzRequired>访问链接</nz-form-label>
+		<nz-form-control nzSpan="8">
+			<input name="url" nzSpan="10" nz-input placeholder="访问链接" [(ngModel)]="page.url">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="remark" nzSpan="4" nzRequired>备注</nz-form-label>
+		<nz-form-control nzSpan="8">
+			<input name="remark" nzSpan="10" nz-input placeholder="备注" [(ngModel)]="page.remark">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="channel" nzSpan="4" nzRequired>渠道</nz-form-label>
+		<nz-form-control nzSpan="2">
+			<input name="channel" nz-input placeholder="渠道" [(ngModel)]="page.channel">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="isDeleted" nzSpan="4" nzRequired>删除状态</nz-form-label>
+		<nz-form-control nzSpan="2">
+			<input name="isDeleted" nz-input placeholder="删除状态" [(ngModel)]="page.isDeleted">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="isExported" nzSpan="4" nzRequired>导出状态</nz-form-label>
+		<nz-form-control nzSpan="2">
+			<input name="isExported" nz-input placeholder="导出状态" [(ngModel)]="page.isExported">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="createDate" nzSpan="4" nzRequired>创建时间</nz-form-label>
+		<nz-form-control nzSpan="4">
+			<input name="createDate" nz-input placeholder="创建时间" [(ngModel)]="page.createDate">
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-label nzFor="updateDate" nzSpan="4" nzRequired>更新时间</nz-form-label>
+		<nz-form-control nzSpan="4">
+			<input name="updateDate" nz-input placeholder="更新时间" [(ngModel)]="page.updateDate">
+		</nz-form-control>
+	</nz-form-item>
+</form>

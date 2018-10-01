@@ -18,18 +18,20 @@ export class PageDetailComponent implements OnInit {
     private location: Location
   ) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this.getPageById();
   }
 
-  getPageById (): void {
+  getPageById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
+    console.log(id)
     this.pageService.getPageById(id).subscribe(page => {
       this.page = page;
+      console.log(this.page);
     })
   }
 
-  goBack (): void {
+  goBack(): void {
     this.location.back();
   }
 }

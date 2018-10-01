@@ -80,7 +80,7 @@
       <td>{{item.updateDate| date}}</td>
       <td>
         <div nz-row nzType="flex" nzJustify="space-around">
-          <div nz-col><button nz-button nzType="primary">查看详情</button></div>
+          <div nz-col><button nz-button nzType="primary" [routerLink]="['/page/detail/'+item.id]">查看详情</button></div>
           <div nz-col><button nz-button nzType="item.isExported?'dashed':'primary'">导出</button></div>
         </div>
       </td>

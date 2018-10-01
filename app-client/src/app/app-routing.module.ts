@@ -16,6 +16,10 @@ const routes: Routes = [{
     breadcrumb: '页面管理'
   },
   children: [{
+    path: '',
+    redirectTo: 'pages',
+    pathMatch: 'full'
+  }, {
     path: 'pages',
     component: PageListComponent,
     data: {
