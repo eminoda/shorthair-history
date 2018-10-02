@@ -1,3 +1,71 @@
-<p>
-  page-draw works!
-</p>
+<nz-row nzGutter="24">
+  <!-- left -->
+  <nz-col nzSpan="12">
+    <nz-row>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>高</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="pageDraw.properties.height">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>宽</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="width" nz-input placeholder="高" [(ngModel)]="pageDraw.properties.width">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    <nz-row>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>边宽</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="border-width" nz-input placeholder="边宽" [(ngModel)]="pageDraw.properties['border-width']">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>边框颜色</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="border-color" nz-input placeholder="边框颜色" [(ngModel)]="pageDraw.properties['border-color']">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    <nz-row>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景色</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="background-color" nz-input placeholder="背景色" [(ngModel)]="pageDraw.properties['background-color']">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景图片</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="background-image" nz-input placeholder="背景图片" [(ngModel)]="pageDraw.properties['background-image']">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <button (click)="preLook()" nz-button>预览</button>
+  </nz-col>
+  <!-- right -->
+  <nz-col nzSpan="12">
+    <div class="phone">
+      <div class="panelWrap" id="draw">
+        2
+      </div>
+    </div>
+
+  </nz-col>
+</nz-row>

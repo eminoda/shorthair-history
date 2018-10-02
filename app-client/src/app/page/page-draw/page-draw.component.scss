@@ -1,0 +1,16 @@
+
+
+.phone{
+    position: relative;
+    margin: auto;
+    height: 667px;
+    width:375px;
+    background-image: url('/assets/draw/background.jpg');
+    .panelWrap{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+}

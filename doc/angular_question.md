@@ -91,4 +91,24 @@ angular.json
 [routerLink]="['/page/detail/'+item.id]"
 ````
 
-## 
+## Invalid configuration of route 'page': redirectTo and children cannot be used together
+在父路由中重定向到其子路由？
+````
+{
+  path: 'page',
+  data: {
+    breadcrumb: '页面管理'
+  },
+  children: [{
+    path: '',
+    redirectTo: 'pages',
+    pathMatch: 'full'
+  }, {
+    path: 'pages',
+    component: PageListComponent,
+    data: {
+      breadcrumb: '页面列表'
+    }
+  },
+}
+````
