@@ -63,8 +63,10 @@
   <nz-col nzSpan="12">
     <div class="phone">
       <div class="panelWrap" id="draw">
-        2
+
       </div>
+      <div class="test1" id="test1" draggable="true" (dragstart)="onDragStart($event)">123</div>
+      <div class="test2" (dragover)='allowDrop($event)' (drop)="drop($event)">222</div>
     </div>
 
   </nz-col>

@@ -27,5 +27,20 @@ export class PageDrawComponent implements OnInit {
     let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
     this.pageService.addStyle(document.getElementById('draw'), styleLine);
   }
+  onDragStart(event) {
+    console.log(event);
+    event.dataTransfer.setData("text", 'test111');
+  }
 
+  allowDrop(event) {
+    event.preventDefault()
+  }
+
+  drop(event) {
+    console.log(event);
+    event.preventDefault();
+    var data = event.dataTransfer.getData("Text");
+    console.log(data);
+    event.target.appendChild(document.getElementById('test1'));
+  }
 }
