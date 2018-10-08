@@ -1,6 +1,25 @@
 <nz-row nzGutter="24">
   <!-- left -->
   <nz-col nzSpan="12">
+    <!-- 屏幕 -->
+    <nz-row>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>设备高</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="board.height" (ngModelChange)="setBoardConfig(board)">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>设备宽</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="width" nz-input placeholder="高" [(ngModel)]="board.width" (ngModelChange)="setBoardConfig(board)">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
     <nz-row>
       <nz-col nzSpan="12">
         <nz-form-item>
@@ -57,17 +76,11 @@
         </nz-form-item>
       </nz-col>
     </nz-row>
+    <button (click)="createElement()" nz-button>创建元素</button>
     <button (click)="preLook()" nz-button>预览</button>
   </nz-col>
   <!-- right -->
   <nz-col nzSpan="12">
-    <div class="phone">
-      <div class="panelWrap" id="draw">
-
-      </div>
-      <div class="test1" id="test1" draggable="true" (dragstart)="onDragStart($event)">123</div>
-      <div class="test2" (dragover)='allowDrop($event)' (drop)="drop($event)">222</div>
-    </div>
-
+    <app-draw-board [boardObservable]="boardObservable" [boardElementObservable]="boardElementObservable"></app-draw-board>
   </nz-col>
 </nz-row>

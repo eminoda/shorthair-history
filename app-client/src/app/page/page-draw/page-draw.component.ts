@@ -1,7 +1,9 @@
+import { Subject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Panel } from '../../model/panel';
 import { PageService } from '../page.service';
-import { style } from '@angular/animations';
+import { Board } from '../../model/board';
+import { BoardElement } from '../../model/boardElement';
 
 @Component({
   selector: 'app-page-draw',
@@ -18,29 +20,25 @@ import { style } from '@angular/animations';
 export class PageDrawComponent implements OnInit {
 
   pageDraw: Panel = new Panel()
-
+  board: Board = new Board();
+  boardObservable: Subject<Board> = new Subject<Board>();
+  boardElement: BoardElement = new BoardElement();
+  boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();//button(href,click),image,template
   constructor(private pageService: PageService) { }
 
-  ngOnInit() {
+  ngOnInit () { }
+
+  setBoardConfig (board) {
+    // this.board = Object.assign({}, this.board);
+    this.boardObservable.next(board);
   }
-  preLook() {
+
+  createElement () {
+    this.boardElementObservable.next(this.boardElement);;
+  }
+
+  preLook () {
     let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
-    this.pageService.addStyle(document.getElementById('draw'), styleLine);
-  }
-  onDragStart(event) {
-    console.log(event);
-    event.dataTransfer.setData("text", 'test111');
-  }
-
-  allowDrop(event) {
-    event.preventDefault()
-  }
-
-  drop(event) {
-    console.log(event);
-    event.preventDefault();
-    var data = event.dataTransfer.getData("Text");
-    console.log(data);
-    event.target.appendChild(document.getElementById('test1'));
+    this.pageService.addStyle(document.getElementById('boardAnchor'), styleLine);
   }
 }

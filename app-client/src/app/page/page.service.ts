@@ -10,13 +10,13 @@ export class PageService {
 
   constructor() { }
 
-  getPages(): Observable<Page[]> {
+  getPages (): Observable<Page[]> {
     return of(PAGES);
   }
-  getPageById(id: number): Observable<Page> {
+  getPageById (id: number): Observable<Page> {
     return of(PAGES.find(page => page.id === id));
   }
-  parseStyle(style) {
+  parseStyle (style) {
     let resultArr = [];
 
     for (let key in style) {
@@ -27,7 +27,7 @@ export class PageService {
       return prev + curr;
     });
   }
-  addStyle(target: any, styleInline: string) {
+  addStyle (target: any, styleInline: string) {
     target.setAttribute(
       'style', styleInline
     );

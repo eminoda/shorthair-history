@@ -1,0 +1,15 @@
+.draw-board-wrap {
+  position: relative;
+  margin: auto;
+  height: 334px; //667px;
+  width: 188px; //375px;
+  background-image: url('/assets/draw/background.jpg');
+
+  .board-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}

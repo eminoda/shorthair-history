@@ -13,6 +13,8 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { PageDrawComponent } from './page/page-draw/page-draw.component';
 import { PageTemplateListComponent } from './page/page-template-list/page-template-list.component';
+import { DrawElementComponent } from './page/page-draw/draw-element/draw-element.component';
+import { DrawBoardComponent } from './page/page-draw/draw-board/draw-board.component';
 // ng-zorro end
 
 registerLocaleData(zh);
@@ -23,10 +25,15 @@ registerLocaleData(zh);
     PageListComponent,
     PageDetailComponent,
     PageDrawComponent,
-    PageTemplateListComponent
+    PageTemplateListComponent,
+    DrawElementComponent,
+    DrawBoardComponent
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, BrowserAnimationsModule, HttpClientModule, NgZorroAntdModule
+  ],
+  entryComponents: [
+    DrawElementComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh_CN' }, { provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

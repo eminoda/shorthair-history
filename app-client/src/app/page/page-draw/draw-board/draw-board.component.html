@@ -1,0 +1,7 @@
+<div class="draw-board-wrap" [ngStyle]="boardStyle">
+  <div class="board-wrap" id="boardAnchor" (dragover)='allowDrop($event)' (drop)="drop($event)">
+    <ng-template #drawElement></ng-template>
+    <!-- <img src="http://activity.niu100.com/imgs/m/2018/09/headimg.jpg" alt="">
+      <div class="test1" id="test1" draggable="true" (dragstart)="onDragStart($event)">123</div> -->
+  </div>
+</div>
