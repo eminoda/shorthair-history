@@ -112,3 +112,12 @@ angular.json
   },
 }
 ````
+
+## [改变ngModule策略](https://angular.cn/api/core/ChangeDetectionStrategy)
+[https://alligator.io/angular/change-detection-strategy/](https://alligator.io/angular/change-detection-strategy/)
+
+## 如何定义Dynamic Component
+[使用@ViewChild装饰器](https://angular.io/api/core/ViewChild)
+````
+
+````

@@ -32,8 +32,8 @@
 待解决问题
 
 框架
-- [ ] 项目框架搭建 Koa+Angular6.0
-- [ ] UI框架选择 NG-ZORRO
+- [*] 项目框架搭建 Koa+Angular6.0
+- [*] UI框架选择 NG-ZORRO
 - [ ] mongo配置，数据库创建
 
 页面绘制
