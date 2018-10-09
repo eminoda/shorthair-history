@@ -116,6 +116,34 @@ angular.json
 ## [改变ngModule策略](https://angular.cn/api/core/ChangeDetectionStrategy)
 [https://alligator.io/angular/change-detection-strategy/](https://alligator.io/angular/change-detection-strategy/)
 
+## 子组件如何调用父组件方法
+parent compontent html
+````html
+<nz-col nzSpan="12">
+  <app-draw-board (testChildEmit)="testParent($event)"></app-draw-board>
+</nz-col>
+````
+
+parent compontent js
+````js
+testParent ($event) {
+  console.log($event);
+}
+````
+
+child compontent html
+````html
+<button (click)="testChildHandle()">child compontent click</button>
+````
+
+child compontent js
+````js
+testChildHandle () {
+  console.log('child click');
+  this.testChildEmit.emit('child say hello');
+}
+````
+
 ## 如何定义Dynamic Component
 [使用@ViewChild装饰器](https://angular.io/api/core/ViewChild)
 ````

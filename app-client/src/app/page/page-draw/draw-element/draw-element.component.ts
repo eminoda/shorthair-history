@@ -1,3 +1,5 @@
+import { PageDrawService } from './../page-draw.service';
+import { BoardElement } from './../../../model/boardElement';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,21 +9,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DrawElementComponent implements OnInit {
 
-  @Input()
-  type: String;
+  boardElement: BoardElement;
 
-  constructor() { }
+  constructor(private pageDrawService: PageDrawService) { }
 
   // let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
   //   this.pageService.addStyle(document.getElementById('draw'), styleLine);
   ngOnInit () {
   }
 
-  testClick () {
-    console.log(this.type);
-    console.log('click');
+  destory () {
+    console.log(this.boardElement.id);
+    this.pageDrawService.destoryElement();
   }
-
 
   onDragStart (event) {
     console.log('ondragstart');

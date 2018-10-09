@@ -1,10 +1,11 @@
 
 import { UtilService } from './../../../service/util.service';
 import { Observable } from 'rxjs';
-import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
 import { Board } from '../../../model/board';
 import { DrawElementComponent } from '../draw-element/draw-element.component';
 import { BoardElement } from '../../../model/boardElement';
+import { PageDrawService } from '../page-draw.service';
 
 @Component({
   selector: 'app-draw-board',
@@ -18,14 +19,15 @@ export class DrawBoardComponent implements OnInit {
 
   @Input() boardObservable: Observable<Board>;
   @Input() boardElementObservable: Observable<BoardElement>;
-
+  @Input() boardElement: BoardElement;
   boardStyle: {};
+  boardElementRef: ComponentRef<DrawElementComponent>;
 
-  constructor(private utilService: UtilService) { }
+  constructor(private utilService: UtilService, private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
     this.setBoardStyle();
-    this.createElement();
+    this.setBoardElement(this.boardElement);
   }
 
   setBoardStyle () {
@@ -40,15 +42,13 @@ export class DrawBoardComponent implements OnInit {
   //   console.log(this.board);
   // }
 
-  createElement () {
+  setBoardElement (boardElement: BoardElement) {
     this.boardElementObservable.subscribe((boardElement: BoardElement) => {
-      console.log(boardElement);
-      if (boardElement.type == 'button') {
-        // this.boardContainer.clear();
-        const boardRef = this.utilService.createDynamicComponent(this.boardContainer, DrawElementComponent);
-        console.log(boardRef.instance);
-        // boardRef.instance.type = 'button';
-      }
+      const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
+      elementRef.instance.boardElement = boardElement;
+      this.pageDrawService.setHideObservable().subscribe(data => {
+        elementRef.destroy();
+      })
     })
   }
 }

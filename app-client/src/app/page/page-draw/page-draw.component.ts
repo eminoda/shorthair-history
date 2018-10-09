@@ -22,7 +22,7 @@ export class PageDrawComponent implements OnInit {
   pageDraw: Panel = new Panel()
   board: Board = new Board();
   boardObservable: Subject<Board> = new Subject<Board>();
-  boardElement: BoardElement = new BoardElement();
+  boardElement: BoardElement;
   boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();//button(href,click),image,template
   constructor(private pageService: PageService) { }
 
@@ -34,7 +34,7 @@ export class PageDrawComponent implements OnInit {
   }
 
   createElement () {
-    this.boardElementObservable.next(this.boardElement);;
+    this.boardElementObservable.next(new BoardElement());
   }
 
   preLook () {
