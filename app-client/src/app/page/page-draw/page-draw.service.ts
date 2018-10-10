@@ -49,9 +49,17 @@ export class PageDrawService {
       }
     }
   }
-  saveStartDragAxis ($event: DragEvent): void {
-    console.log($event.currentTarget);
+  saveDragAxis ($event: any): void {
+    this.dragCenterAxis.y = $event.currentTarget.offsetHeight / 2;
+    this.dragCenterAxis.x = $event.currentTarget.offsetWidth / 2;
+    this.dragAxis.x = $event.offestX;
+    this.dragAxis.y = $event.offestY;
   }
+
+  calcOffsetDragAxis ($event: any): void {
+
+  }
+
   resetDragAxis (): void {
     this.dragAxis.x = 0;
     this.dragAxis.y = 0;
