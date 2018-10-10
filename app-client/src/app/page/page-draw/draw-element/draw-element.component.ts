@@ -1,6 +1,6 @@
 import { PageDrawService } from './../page-draw.service';
 import { BoardElement } from './../../../model/boardElement';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-draw-element',
@@ -10,37 +10,44 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DrawElementComponent implements OnInit {
 
   boardElement: BoardElement;
-
+  boardElementStyle: string;
+  showControl: boolean = false;
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  // let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
-  //   this.pageService.addStyle(document.getElementById('draw'), styleLine);
   ngOnInit () {
+    this.onBoardElement();
   }
 
   destory () {
-    this.pageDrawService.destoryElementById(this.boardElement.id);
+    console.log(123);
+    // this.pageDrawService.destoryElementById(this.boardElement.id);
   }
 
-  onDragStart (event) {
-    console.log('ondragstart');
-    event.dataTransfer.setData("text", 'test111');
+  onBoardElement () {
+    this.pageDrawService.setBoardElementObservable();
+    this.pageDrawService.getBoardElementObservable().subscribe((boardElement: BoardElement) => {
+      this.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
+    })
   }
 
-  allowDrop (event) {
-    console.log(`clientX:${event.clientX},clientY:${event.clientY},layerX:${event.layerX},layerY:${event.layerY},offsetX:${event.offsetX},offsetY:${event.offsetY},pageX:${event.pageX},pageY:${event.pageY}`);
-    event.preventDefault()
+  @HostListener('mouseover', ['$event.target'])
+  mouseover () {
+    this.showControl = true;
+  }
+  @HostListener('mouseleave', ['$event.target'])
+  mouseleave () {
+    this.showControl = false;
+    console.log(this.boardElement);
   }
 
-  drop (event) {
-    console.log('ondrop');
-    event.preventDefault();
-    var data = event.dataTransfer.getData("Text");
-    console.log(data);
-    event.target.appendChild(document.getElementById('test1'));
+  // 监听元素形状变化
+  startListenChange ($event: Event) {
+    console.log(this.boardElement);
+    $event.stopPropagation();
   }
-  dropEnd () {
-    console.log('dropend');
+  dragStart ($event: DragEvent) {
+    this.pageDrawService.saveDragAxis($event);
+    $event.dataTransfer.setData('Text', String(this.boardElement.id));
   }
 }

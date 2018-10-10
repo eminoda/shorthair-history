@@ -1,1 +1,7 @@
-<button (click)="destory()" [style]="boardElement|style" nz-button *ngIf="boardElement&&boardElement.type=='button'">{{boardElement.id}}</button>
+<div draggable="true" (click)="destory()" (dragstart)="dragStart($event)" [id]="boardElement.id" [ngStyle]="boardElementStyle"
+  *ngIf="boardElement&&boardElement.type=='button'">{{boardElement.height}}
+  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-top-left"></span>
+  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-top-right"></span>
+  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-bottom-left"></span>
+  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-bottom-right"></span>
+</div>

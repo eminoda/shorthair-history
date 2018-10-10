@@ -22,7 +22,8 @@ export class DrawBoardComponent implements OnInit {
   @Input() boardElement: BoardElement;
   boardStyle: {};
   boardElementRef: ComponentRef<DrawElementComponent>;
-
+  offsetX: number = 0;
+  offsetY: number = 0;
   constructor(private utilService: UtilService, private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
@@ -54,9 +55,33 @@ export class DrawBoardComponent implements OnInit {
 
   createBoardElement (boardElement: BoardElement) {
     const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
-    console.log(elementRef);
-    console.log(boardElement);
     elementRef.instance.boardElement = boardElement;
+    elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
+    console.log(elementRef.instance.boardElementStyle);
     this.pageDrawService.addBoardElementRef(elementRef);
+  }
+
+  allowDrop ($event) {
+    // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
+    $event.preventDefault()
+  }
+  drop ($event: DragEvent) {
+    console.log(this.pageDrawService.dragAxis);
+    console.log($event.offsetX + ',' + $event.offsetY)
+    this.offsetX = $event.offsetX - this.pageDrawService.dragAxis.x;
+    this.offsetY = $event.offsetY - this.pageDrawService.dragAxis.y;
+    this.calcOffset(Number($event.dataTransfer.getData('Text')));
+    event.preventDefault();
+  }
+
+  calcOffset (id: number) {
+    const boardElementRefList = this.pageDrawService.boardElementRefList;
+    for (let boardElementRef of boardElementRefList) {
+      if (boardElementRef.instance.boardElement.id === id) {
+        boardElementRef.instance.boardElement.top = this.offsetY;
+        boardElementRef.instance.boardElement.left = this.offsetX;
+        this.pageDrawService.getBoardElementObservable().next(boardElementRef.instance.boardElement);
+      }
+    }
   }
 }
