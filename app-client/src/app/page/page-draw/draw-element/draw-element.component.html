@@ -1,1 +1,1 @@
-<button (click)="destory()" nz-button *ngIf="boardElement">{{boardElement.id}}</button>
+<button (click)="destory()" [style]="boardElement|style" nz-button *ngIf="boardElement&&boardElement.type=='button'">{{boardElement.id}}</button>

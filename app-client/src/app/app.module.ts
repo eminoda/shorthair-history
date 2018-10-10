@@ -15,6 +15,7 @@ import { PageDrawComponent } from './page/page-draw/page-draw.component';
 import { PageTemplateListComponent } from './page/page-template-list/page-template-list.component';
 import { DrawElementComponent } from './page/page-draw/draw-element/draw-element.component';
 import { DrawBoardComponent } from './page/page-draw/draw-board/draw-board.component';
+import { StylePipe } from './pipe/style.pipe';
 // ng-zorro end
 
 registerLocaleData(zh);
@@ -27,7 +28,8 @@ registerLocaleData(zh);
     PageDrawComponent,
     PageTemplateListComponent,
     DrawElementComponent,
-    DrawBoardComponent
+    DrawBoardComponent,
+    StylePipe
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, BrowserAnimationsModule, HttpClientModule, NgZorroAntdModule

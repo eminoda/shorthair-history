@@ -11,6 +11,7 @@ export class DrawElementComponent implements OnInit {
 
   boardElement: BoardElement;
 
+
   constructor(private pageDrawService: PageDrawService) { }
 
   // let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
@@ -19,8 +20,7 @@ export class DrawElementComponent implements OnInit {
   }
 
   destory () {
-    console.log(this.boardElement.id);
-    this.pageDrawService.destoryElement();
+    this.pageDrawService.destoryElementById(this.boardElement.id);
   }
 
   onDragStart (event) {

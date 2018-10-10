@@ -26,11 +26,11 @@ export class DrawBoardComponent implements OnInit {
   constructor(private utilService: UtilService, private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
-    this.setBoardStyle();
-    this.setBoardElement(this.boardElement);
+    this.boardStyleListen();
+    this.boardElementListen();
   }
 
-  setBoardStyle () {
+  boardStyleListen () {
     this.boardObservable.subscribe((board: Board) => {
       this.boardStyle = {
         width: board.width + 'px',
@@ -38,17 +38,25 @@ export class DrawBoardComponent implements OnInit {
       }
     })
   }
-  // ngOnChanges () {
-  //   console.log(this.board);
-  // }
 
-  setBoardElement (boardElement: BoardElement) {
-    this.boardElementObservable.subscribe((boardElement: BoardElement) => {
-      const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
-      elementRef.instance.boardElement = boardElement;
-      this.pageDrawService.setHideObservable().subscribe(data => {
-        elementRef.destroy();
-      })
+  boardElementListen () {
+    this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
+      const boardElementRefList = this.pageDrawService.boardElementRefList;
+      for (let boardElementRef of boardElementRefList) {
+        if (boardElementRef.instance.boardElement.id === currentBoardElement.id) {
+
+          break;
+        }
+      }
+      this.createBoardElement(currentBoardElement);
     })
+  }
+
+  createBoardElement (boardElement: BoardElement) {
+    const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
+    console.log(elementRef);
+    console.log(boardElement);
+    elementRef.instance.boardElement = boardElement;
+    this.pageDrawService.addBoardElementRef(elementRef);
   }
 }

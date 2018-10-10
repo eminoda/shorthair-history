@@ -38,7 +38,7 @@ export class PageDrawComponent implements OnInit {
   }
 
   preLook () {
-    let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
-    this.pageService.addStyle(document.getElementById('boardAnchor'), styleLine);
+    // let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
+    // this.pageService.addStyle(document.getElementById('boardAnchor'), styleLine);
   }
 }
