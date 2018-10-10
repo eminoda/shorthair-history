@@ -26,12 +26,12 @@ export class DrawBoardComponent implements OnInit {
   offsetY: number = 0;
   constructor(private utilService: UtilService, private pageDrawService: PageDrawService) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this.boardStyleListen();
     this.boardElementListen();
   }
 
-  boardStyleListen () {
+  boardStyleListen() {
     this.boardObservable.subscribe((board: Board) => {
       this.boardStyle = {
         width: board.width + 'px',
@@ -40,7 +40,7 @@ export class DrawBoardComponent implements OnInit {
     })
   }
 
-  boardElementListen () {
+  boardElementListen() {
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
       const boardElementRefList = this.pageDrawService.boardElementRefList;
       for (let boardElementRef of boardElementRefList) {
@@ -53,7 +53,7 @@ export class DrawBoardComponent implements OnInit {
     })
   }
 
-  createBoardElement (boardElement: BoardElement) {
+  createBoardElement(boardElement: BoardElement) {
     const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
     elementRef.instance.boardElement = boardElement;
     elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
@@ -61,25 +61,23 @@ export class DrawBoardComponent implements OnInit {
     this.pageDrawService.addBoardElementRef(elementRef);
   }
 
-  allowDrop ($event) {
+  allowDrop($event) {
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
     $event.preventDefault()
   }
-  drop ($event: DragEvent) {
-    console.log(this.pageDrawService.dragAxis);
-    console.log($event.offsetX + ',' + $event.offsetY)
-    this.offsetX = $event.offsetX - this.pageDrawService.dragAxis.x;
-    this.offsetY = $event.offsetY - this.pageDrawService.dragAxis.y;
+  drop($event: DragEvent) {
+    this.pageDrawService.calcOffsetDragAxis($event.offsetX, $event.offsetY);
     this.calcOffset(Number($event.dataTransfer.getData('Text')));
     event.preventDefault();
   }
 
-  calcOffset (id: number) {
+  calcOffset(id: number) {
     const boardElementRefList = this.pageDrawService.boardElementRefList;
     for (let boardElementRef of boardElementRefList) {
       if (boardElementRef.instance.boardElement.id === id) {
-        boardElementRef.instance.boardElement.top = this.offsetY;
-        boardElementRef.instance.boardElement.left = this.offsetX;
+        boardElementRef.instance.boardElement.top = this.pageDrawService.offsetAxis.y;
+        boardElementRef.instance.boardElement.left = this.pageDrawService.offsetAxis.x;
+        console.log(boardElementRef.instance.boardElement);
         this.pageDrawService.getBoardElementObservable().next(boardElementRef.instance.boardElement);
       }
     }
