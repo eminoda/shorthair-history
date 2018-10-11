@@ -30,6 +30,7 @@ export class DrawBoardComponent implements OnInit {
   constructor(public el: ElementRef, private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
+    console.log('DrawBoardComponent');
     this.onBoardStyle();
     this.onBoardElement();
   }

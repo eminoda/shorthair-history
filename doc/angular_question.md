@@ -153,3 +153,6 @@ testChildHandle () {
 ````
 
 ````
+
+## Error: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'ngIf: undefined'. Current value: 'ngIf: true'. It seems like the view has been created after its parent and its children have been dirty checked. Has it been created in a change detection hook ?
+[https://github.com/angular/angular/issues/14748#issuecomment-312224737](https://github.com/angular/angular/issues/14748#issuecomment-312224737)

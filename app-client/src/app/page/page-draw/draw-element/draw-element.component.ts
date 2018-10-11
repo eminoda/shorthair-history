@@ -16,15 +16,11 @@ export class DrawElementComponent implements OnInit {
   constructor(private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
-    this.onBoardElement();
+    console.log('DrawElementComponent');
   }
 
   destory () {
     this.pageDrawService.destoryElementById(this.boardElement.id);
-  }
-
-  onBoardElement () {
-
   }
 
   @HostListener('mouseover', ['$event.target'])

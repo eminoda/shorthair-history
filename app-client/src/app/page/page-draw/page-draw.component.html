@@ -25,7 +25,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>高</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="height" nz-input placeholder="高" [(ngModel)]="pageDraw.properties.height">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="boardElement.height">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -33,7 +33,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>宽</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="width" nz-input placeholder="高" [(ngModel)]="pageDraw.properties.width">
+            <input name="width" nz-input placeholder="高" [(ngModel)]="boardElement.width">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -44,7 +44,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>边宽</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="border-width" nz-input placeholder="边宽" [(ngModel)]="pageDraw.properties['border-width']">
+            <input name="border-width" nz-input placeholder="边宽" [(ngModel)]="boardElement['border-width']">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -52,7 +52,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>边框颜色</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="border-color" nz-input placeholder="边框颜色" [(ngModel)]="pageDraw.properties['border-color']">
+            <input name="border-color" nz-input placeholder="边框颜色" [(ngModel)]="boardElement['border-color']">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -63,7 +63,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景色</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="background-color" nz-input placeholder="背景色" [(ngModel)]="pageDraw.properties['background-color']">
+            <input name="background-color" nz-input placeholder="背景色" [(ngModel)]="boardElement['background-color']">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -71,7 +71,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景图片</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="background-image" nz-input placeholder="背景图片" [(ngModel)]="pageDraw.properties['background-image']">
+            <input name="background-image" nz-input placeholder="背景图片" [(ngModel)]="boardElement['background-image']">
           </nz-form-control>
         </nz-form-item>
       </nz-col>

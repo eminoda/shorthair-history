@@ -1,7 +1,7 @@
 import { PageDrawService } from './page-draw.service';
 import { BoardElement } from './../../model/boardElement';
 import { Subject } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, DoCheck, AfterViewInit } from '@angular/core';
 import { Panel } from '../../model/panel';
 import { Board } from '../../model/board';
 
@@ -17,18 +17,22 @@ import { Board } from '../../model/board';
  * 2. script libs
  * 3. 拖拽
  */
-export class PageDrawComponent implements OnInit {
+export class PageDrawComponent implements OnInit, AfterContentInit {
 
   pageDraw: Panel = new Panel()
   board: Board = new Board();
   boardObservable: Subject<Board> = new Subject<Board>();
-  boardElement: BoardElement;
+  boardElement: BoardElement = new BoardElement();
   boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();//button(href,click),image,template
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit () { }
-
+  ngOnInit () {
+  }
+  ngAfterContentInit () {
+    console.log('docheck');
+    this.createElement();
+  }
   setBoardConfig (board) {
     // this.board = Object.assign({}, this.board);
     this.boardObservable.next(board);
@@ -41,7 +45,7 @@ export class PageDrawComponent implements OnInit {
 
   preLook () {
     let style = this.pageDrawService.addPxUnit(this.boardElement);
-    console.log(style);
+    console.log(this.boardElement);
   }
 
   // draw-board call
