@@ -15,16 +15,15 @@ export class DrawElementComponent implements OnInit {
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.onBoardElement();
   }
 
-  destory() {
-    console.log(123);
-    // this.pageDrawService.destoryElementById(this.boardElement.id);
+  destory () {
+    this.pageDrawService.destoryElementById(this.boardElement.id);
   }
 
-  onBoardElement() {
+  onBoardElement () {
     this.pageDrawService.setBoardElementObservable();
     this.pageDrawService.getBoardElementObservable().subscribe((boardElement: BoardElement) => {
       this.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
@@ -33,21 +32,21 @@ export class DrawElementComponent implements OnInit {
   }
 
   @HostListener('mouseover', ['$event.target'])
-  mouseover() {
+  mouseover () {
     this.showControl = true;
   }
   @HostListener('mouseleave', ['$event.target'])
-  mouseleave() {
+  mouseleave () {
     this.showControl = false;
     // console.log(this.boardElement);
   }
 
   // 监听元素形状变化
-  startListenChange($event: Event) {
+  startListenChange ($event: Event) {
     $event.stopPropagation();
   }
-  dragStart($event: DragEvent) {
-    this.pageDrawService.saveDragAxis($event.offsetX, $event.offsetY);
+  dragStart ($event: DragEvent) {
+    this.pageDrawService.saveDragAxis($event);
     $event.dataTransfer.setData('Text', String(this.boardElement.id));
   }
 }

@@ -20,40 +20,45 @@ export class DrawBoardComponent implements OnInit {
   @Input() boardObservable: Observable<Board>;
   @Input() boardElementObservable: Observable<BoardElement>;
   @Input() boardElement: BoardElement;
+  @Input() board: Board;
   boardStyle: {};
   boardElementRef: ComponentRef<DrawElementComponent>;
   offsetX: number = 0;
   offsetY: number = 0;
   constructor(private utilService: UtilService, private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.boardStyleListen();
     this.boardElementListen();
   }
 
-  boardStyleListen() {
+  boardStyleListen () {
+    this.pageDrawService.saveLimitAxis(this.board.width, this.board.height);
     this.boardObservable.subscribe((board: Board) => {
       this.boardStyle = {
         width: board.width + 'px',
         height: board.height + 'px'
       }
+      this.pageDrawService.saveLimitAxis(board.width, board.height);
     })
   }
 
-  boardElementListen() {
+  boardElementListen () {
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
       const boardElementRefList = this.pageDrawService.boardElementRefList;
-      for (let boardElementRef of boardElementRefList) {
-        if (boardElementRef.instance.boardElement.id === currentBoardElement.id) {
+      // for (let boardElementRef of boardElementRefList) {
+      //   if (boardElementRef.instance.boardElement.id === currentBoardElement.id) {
 
-          break;
-        }
-      }
-      this.createBoardElement(currentBoardElement);
+      //     break;
+      //   }
+      // }
+      let boardElement = this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id) || currentBoardElement;
+      this.pageDrawService.currentBoardElement = boardElement;
+      this.createBoardElement(boardElement);
     })
   }
 
-  createBoardElement(boardElement: BoardElement) {
+  createBoardElement (boardElement: BoardElement) {
     const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
     elementRef.instance.boardElement = boardElement;
     elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
@@ -61,17 +66,17 @@ export class DrawBoardComponent implements OnInit {
     this.pageDrawService.addBoardElementRef(elementRef);
   }
 
-  allowDrop($event) {
+  allowDrop ($event) {
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
     $event.preventDefault()
   }
-  drop($event: DragEvent) {
-    this.pageDrawService.calcOffsetDragAxis($event.offsetX, $event.offsetY);
+  drop ($event: DragEvent) {
+    this.pageDrawService.calcOffsetDragAxis($event);
     this.calcOffset(Number($event.dataTransfer.getData('Text')));
     event.preventDefault();
   }
 
-  calcOffset(id: number) {
+  calcOffset (id: number) {
     const boardElementRefList = this.pageDrawService.boardElementRefList;
     for (let boardElementRef of boardElementRefList) {
       if (boardElementRef.instance.boardElement.id === id) {

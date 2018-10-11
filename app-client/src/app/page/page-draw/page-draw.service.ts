@@ -11,82 +11,104 @@ export class PageDrawService {
   boardElementRefList: Array<ComponentRef<DrawElementComponent>> = [];
   boardElementObservable: Subject<BoardElement>;
 
-  offsetAxis: Axis;
-  dragAxis: Axis;
+  // 偏移量
+  offsetAxis: Axis = new Axis(0, 0);
+  // 左边起始点
+  beforeClientAxis: Axis = new Axis(0, 0);
+  minLimitAxis: Axis;
+  maxLimitAxis: Axis;
+  currentBoardElement: BoardElement;
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
-  createElement<T>(boardContainer: ViewContainerRef, component: Type<T>): ComponentRef<T> {
+  createElement<T> (boardContainer: ViewContainerRef, component: Type<T>): ComponentRef<T> {
     const factory = this.resolver.resolveComponentFactory<T>(component);
     const boardElementRef = boardContainer.createComponent<T>(factory);
     return boardElementRef;
   }
 
-  addBoardElementRef(componentRef: ComponentRef<DrawElementComponent>): void {
+  addBoardElementRef (componentRef: ComponentRef<DrawElementComponent>): void {
     this.boardElementRefList.push(componentRef);
   }
 
   // draw-element & draw-board 通讯
-  setBoardElementObservable(): void {
+  setBoardElementObservable (): void {
     this.boardElementObservable = new Subject<BoardElement>();
   }
-  getBoardElementObservable(): Subject<BoardElement> {
+  getBoardElementObservable (): Subject<BoardElement> {
     return this.boardElementObservable;
   }
-  destoryElementById(id: number) {
+  getCurrentBoardELementById (id: number): BoardElement {
+    for (let boardElementRef of this.boardElementRefList) {
+      if (boardElementRef.instance.boardElement.id === id) {
+        return boardElementRef.instance.boardElement;
+      }
+    }
+    return null;
+  }
+  destoryElementById (id: number) {
+    this.beforeClientAxis.x = 0;
+    this.beforeClientAxis.y = 0;
     for (let boardElementRef of this.boardElementRefList) {
       if (id === boardElementRef.instance.boardElement.id) {
         boardElementRef.destroy();
       }
     }
   }
-  saveDragAxis(x: number, y: number): void {
-    this.dragAxis = new Axis(x, y);
-    console.log('start');
-    console.log(this.dragAxis);
+  // 记录起始坐标
+  saveDragAxis ($event: DragEvent): void {
+    this.beforeClientAxis.x = $event.clientX;
+    this.beforeClientAxis.y = $event.clientY;
   }
-
-  calcOffsetDragAxis(x: number, y: number): void {
-    console.log({
-      currentX: x,
-      currentY: y
-    });
-    this.offsetAxis = new Axis(x - this.dragAxis.x, y - this.dragAxis.y);
-    console.log('offset');
-    console.log(this.offsetAxis);
+  // 计算拖动偏移量
+  calcOffsetDragAxis ($event: DragEvent): void {
+    // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
+    this.offsetAxis.x = $event.clientX - this.beforeClientAxis.x + this.offsetAxis.x;
+    this.offsetAxis.y = $event.clientY - this.beforeClientAxis.y + this.offsetAxis.y;
+    this.checkDragAxis($event);
   }
-
-  resetDragAxis(): void {
-    this.dragAxis.x = 0;
-    this.dragAxis.y = 0;
+  // 拖动界值，draw-board 中初始化
+  saveLimitAxis (width: number, height: number): void {
+    this.minLimitAxis = new Axis(0, 0);
+    this.maxLimitAxis = new Axis(width, height);
+  }
+  private checkDragAxis ($event: any) {
+    if (this.offsetAxis.x + this.currentBoardElement.width > this.maxLimitAxis.x) {
+      this.offsetAxis.x = this.maxLimitAxis.x - this.currentBoardElement.width;
+    }
+    if (this.offsetAxis.x < 0) {
+      this.offsetAxis.x = 0;
+    }
+    if (this.offsetAxis.y + this.currentBoardElement.height > this.maxLimitAxis.y) {
+      this.offsetAxis.y = this.maxLimitAxis.y - this.currentBoardElement.height;
+    }
+    if (this.offsetAxis.y < 0) {
+      this.offsetAxis.y = 0;
+    }
   }
   /**
    * 解析面板元素对象
    * @param boardElement
    * {id:1,width:2} ==> 'width:2;' 
    */
-  parseStyleToStr(boardElement: BoardElement): string {
-
+  parseStyleToStr (boardElement: BoardElement): string {
     let style = this.addPxUnit(boardElement);
-
     let resultArr = [];
-
     for (let key in style) {
       if (style[key]) {
         resultArr.push(`${key}:${style[key]};`);
       }
     }
-
     return resultArr.reduce((prev, curr) => {
       return prev + curr;
     });
   }
-  addStyle(target: any, styleInline: string) {
-    target.setAttribute(
-      'style', styleInline
-    );
-  }
-  addPxUnit(boardElement: BoardElement): any {
+  /**
+   * 指定css属性添加px
+   * 如果默认为0，则初始化100%
+   * @param boardElement 
+   */
+  addPxUnit (boardElement: BoardElement): any {
     let style = Object.assign({}, boardElement);
     let properties = ['height', 'width', 'font-size', 'border-width', 'border-radius', 'top', 'bottom', 'left', 'right'];
     let unit = 'px';
@@ -103,5 +125,10 @@ export class PageDrawService {
       }
     }
     return style;
+  }
+  addStyle (target: any, styleInline: string) {
+    target.setAttribute(
+      'style', styleInline
+    );
   }
 }

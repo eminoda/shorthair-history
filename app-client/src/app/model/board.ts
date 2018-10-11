@@ -1,4 +1,4 @@
 export class Board {
-    width: Number = 118
-    height: Number = 334
+    width: number = 188
+    height: number = 334
 }
