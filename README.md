@@ -25,43 +25,54 @@
 ## 功能简介
 ![简介](./doc/market.png)
 
-# 代码说明
+## 功能展示（边做边出）
 
 
 # TODO LIST
 待解决问题
 
-框架
-- [*] 项目框架搭建 Koa+Angular6.0
-- [*] UI框架选择 NG-ZORRO
-- [ ] mongo配置，数据库创建
+技术选型
+- [*] 框架：Koa+Angular6.0
+- [*] UI：NG-ZORRO
+- [ ] 数据库：mongo
 
 页面绘制
-- [ ] 页面在线编辑（元素定位配置、同步展示）
-- [ ] 模板实现——普通布局（注册功能、App下载）
-- [ ] 模板实现——特殊布局（轮播图、产品展示）
-- [ ] 信息维护（市场可配置页面元素，TDK，版权，备案号等信息）
-- [ ] 功能逻辑（注册、下载、Button效果）
+- [*] 在线编辑：动态组件
+- [*] 在线编辑：元素拖拽Drag&Drop
+- [ ] 在线编辑：元素变形
+- [ ] 模板（普通）：注册框
+- [ ] 模板（普通）：App下载
+- [ ] 模板（普通）：静态（TDK、版权、备案号等固定信息）
+- [ ] 模板（特殊）：轮播图、产品展示
+- [ ] 功能交互：跳转、事件回调、接口调用
+- [ ] 模板组合
 
 页面落地
-- [ ] 模板之间的组合输出
-- [ ] 最终页面的落地输出
+- [ ] 页面预览
+- [ ] 页面的落地（css、html、js）
 
 域名解析
 - [ ] Node or Nginx解析选型
 - [ ] 多业务线解析规则
 
+其他
+- [ ] logger
+- [ ] user
+
+# 快速帮助
+- [angular 上手](./doc/angular_start.md)
+- [angular 常见问题](./doc/angular_question.md)
+
 # 参考
-[Baidu h5 制作](https://h5.bce.baidu.com)
+可视化方案参考
+- [Baidu h5 制作](https://h5.bce.baidu.com)
+- [页面可视化搭建工具前生今世——掘金](https://juejin.im/post/5b0324f4518825426a20008d)
+- [vue-mintui 效果展示](https://github.com/mint-ui/docs/blob/master/src/components/phone.vue)
+- [virtual document VNode实现](https://segmentfault.com/a/1190000008291645)
 
-[页面可视化搭建工具前生今世——掘金](https://juejin.im/post/5b0324f4518825426a20008d)
+技术栈学习
+- [koa和egg项目webpack内存编译和热更新实现——segmentfault](https://segmentfault.com/a/1190000009377030)
 
-[vue-mintui 效果展示](https://github.com/mint-ui/docs/blob/master/src/components/phone.vue)
-
-[virtual document VNode实现](https://segmentfault.com/a/1190000008291645)
-
-[koa和egg项目webpack内存编译和热更新实现——segmentfault](https://segmentfault.com/a/1190000009377030)
-
-[Events](https://developer.mozilla.org/zh-CN/docs/Web/Events)
-
-[pageX,clientX,layerX区别](https://bbs.xiuno.com/thread-3610.htm)
+基础查漏补缺
+- [Events](https://developer.mozilla.org/zh-CN/docs/Web/Events)
+- [pageX,clientX,layerX区别](https://bbs.xiuno.com/thread-3610.htm)

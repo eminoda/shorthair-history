@@ -32,7 +32,7 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     let self = this;
     setTimeout(function () {
-      self.createElement();
+      // self.createElement();
     }, 500)
   }
   setBoardConfig(board) {
