@@ -156,3 +156,9 @@ testChildHandle () {
 
 ## Error: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'ngIf: undefined'. Current value: 'ngIf: true'. It seems like the view has been created after its parent and its children have been dirty checked. Has it been created in a change detection hook ?
 [https://github.com/angular/angular/issues/14748#issuecomment-312224737](https://github.com/angular/angular/issues/14748#issuecomment-312224737)
+[https://github.com/angular/angular/issues/17572](https://github.com/angular/angular/issues/17572)
+
+angular有自己一套渲染数据的方式，按照life cycle，从父组件到子组件传递。
+这个错，大致由于父子组件在初始的时候已经加载好数据，但由于业务需要在错误的生命周期中又再次赋值，导致数据渲染不符合angular的逻辑（比如 **ngAfterViewInit** ）；
+解决方法社区已给出，大致在何时的life cycle做处理，或者把业务逻辑改成异步，跳过angular的检查机制。
+

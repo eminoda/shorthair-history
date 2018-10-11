@@ -17,7 +17,7 @@ import { Board } from '../../model/board';
  * 2. script libs
  * 3. 拖拽
  */
-export class PageDrawComponent implements OnInit, AfterContentInit {
+export class PageDrawComponent implements OnInit, AfterViewInit {
 
   pageDraw: Panel = new Panel()
   board: Board = new Board();
@@ -27,29 +27,31 @@ export class PageDrawComponent implements OnInit, AfterContentInit {
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit () {
+  ngOnInit() {
   }
-  ngAfterContentInit () {
-    console.log('docheck');
-    this.createElement();
+  ngAfterViewInit() {
+    let self = this;
+    setTimeout(function () {
+      self.createElement();
+    }, 500)
   }
-  setBoardConfig (board) {
+  setBoardConfig(board) {
     // this.board = Object.assign({}, this.board);
     this.boardObservable.next(board);
   }
 
-  createElement () {
+  createElement() {
     this.boardElement = new BoardElement();
     this.boardElementObservable.next(this.boardElement);
   }
 
-  preLook () {
+  preLook() {
     let style = this.pageDrawService.addPxUnit(this.boardElement);
     console.log(this.boardElement);
   }
 
   // draw-board call
-  updateBoardElement (boardElement: BoardElement) {
+  updateBoardElement(boardElement: BoardElement) {
     this.boardElement = boardElement;
   }
 }
