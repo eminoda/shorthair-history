@@ -1,7 +1,7 @@
 export class BoardElement {
     id: number = new Date().getTime();
     type: string = 'button';
-    position: string = "relative";
+    position: string = "absolute";
     display: string = "inline-block";
     height: any = 35;
     width: any = 100;

@@ -81,6 +81,7 @@
   </nz-col>
   <!-- right -->
   <nz-col nzSpan="12">
-    <app-draw-board [board]="board" [boardObservable]="boardObservable" [boardElementObservable]="boardElementObservable"></app-draw-board>
+    <app-draw-board (updateBoardElementEmit)="updateBoardElement($event)" [board]="board" [boardObservable]="boardObservable"
+      [boardElementObservable]="boardElementObservable"></app-draw-board>
   </nz-col>
 </nz-row>

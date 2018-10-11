@@ -24,11 +24,7 @@ export class DrawElementComponent implements OnInit {
   }
 
   onBoardElement () {
-    this.pageDrawService.setBoardElementObservable();
-    this.pageDrawService.getBoardElementObservable().subscribe((boardElement: BoardElement) => {
-      this.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
-      // console.log(this.boardElementStyle);
-    })
+
   }
 
   @HostListener('mouseover', ['$event.target'])
@@ -46,6 +42,10 @@ export class DrawElementComponent implements OnInit {
     $event.stopPropagation();
   }
   dragStart ($event: DragEvent) {
+    this.pageDrawService.setBoardElementObservable();
+    this.pageDrawService.getBoardElementObservable().subscribe((boardElement: BoardElement) => {
+      this.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
+    })
     this.pageDrawService.saveDragAxis($event);
     $event.dataTransfer.setData('Text', String(this.boardElement.id));
   }

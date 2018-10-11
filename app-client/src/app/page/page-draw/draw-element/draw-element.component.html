@@ -1,5 +1,5 @@
 <div draggable="true" (click)="destory()" (dragstart)="dragStart($event)" [id]="boardElement.id" [ngStyle]="boardElementStyle"
-  *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.left+','+boardElementStyle.top}}
+  *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.id}}
   <span *ngIf="showControl" (click)="startListenChange($event)" class="position-top-left"></span>
   <span *ngIf="showControl" (click)="startListenChange($event)" class="position-top-right"></span>
   <span *ngIf="showControl" (click)="startListenChange($event)" class="position-bottom-left"></span>

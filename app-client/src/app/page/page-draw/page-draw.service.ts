@@ -17,6 +17,7 @@ export class PageDrawService {
   beforeClientAxis: Axis = new Axis(0, 0);
   minLimitAxis: Axis;
   maxLimitAxis: Axis;
+  // 当前元素，用于验证移动边界
   currentBoardElement: BoardElement;
 
   constructor(private resolver: ComponentFactoryResolver) { }
@@ -65,14 +66,15 @@ export class PageDrawService {
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
     this.offsetAxis.x = $event.clientX - this.beforeClientAxis.x + this.offsetAxis.x;
     this.offsetAxis.y = $event.clientY - this.beforeClientAxis.y + this.offsetAxis.y;
-    this.checkDragAxis($event);
+    this.checkDragAxis();
   }
   // 拖动界值，draw-board 中初始化
   saveLimitAxis (width: number, height: number): void {
     this.minLimitAxis = new Axis(0, 0);
     this.maxLimitAxis = new Axis(width, height);
   }
-  private checkDragAxis ($event: any) {
+  // 验证边界
+  private checkDragAxis () {
     if (this.offsetAxis.x + this.currentBoardElement.width > this.maxLimitAxis.x) {
       this.offsetAxis.x = this.maxLimitAxis.x - this.currentBoardElement.width;
     }

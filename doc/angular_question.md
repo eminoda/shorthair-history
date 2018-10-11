@@ -115,6 +115,10 @@ angular.json
 
 ## [改变ngModule策略](https://angular.cn/api/core/ChangeDetectionStrategy)
 [https://alligator.io/angular/change-detection-strategy/](https://alligator.io/angular/change-detection-strategy/)
+重写对象，改变引用
+````
+Object.assign({}, this.board);
+````
 
 ## 子组件如何调用父组件方法
 parent compontent html

@@ -1,9 +1,9 @@
+import { PageDrawService } from './page-draw.service';
+import { BoardElement } from './../../model/boardElement';
 import { Subject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Panel } from '../../model/panel';
-import { PageService } from '../page.service';
 import { Board } from '../../model/board';
-import { BoardElement } from '../../model/boardElement';
 
 @Component({
   selector: 'app-page-draw',
@@ -24,7 +24,8 @@ export class PageDrawComponent implements OnInit {
   boardObservable: Subject<Board> = new Subject<Board>();
   boardElement: BoardElement;
   boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();//button(href,click),image,template
-  constructor(private pageService: PageService) { }
+
+  constructor(private pageDrawService: PageDrawService) { }
 
   ngOnInit () { }
 
@@ -34,11 +35,17 @@ export class PageDrawComponent implements OnInit {
   }
 
   createElement () {
-    this.boardElementObservable.next(new BoardElement());
+    this.boardElement = new BoardElement();
+    this.boardElementObservable.next(this.boardElement);
   }
 
   preLook () {
-    // let styleLine = this.pageService.parseStyle(this.pageDraw.properties);
-    // this.pageService.addStyle(document.getElementById('boardAnchor'), styleLine);
+    let style = this.pageDrawService.addPxUnit(this.boardElement);
+    console.log(style);
+  }
+
+  // draw-board call
+  updateBoardElement (boardElement: BoardElement) {
+    this.boardElement = boardElement;
   }
 }
