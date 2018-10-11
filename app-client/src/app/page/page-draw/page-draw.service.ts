@@ -2,6 +2,7 @@ import { BoardElement } from './../../model/boardElement';
 import { DrawElementComponent } from './draw-element/draw-element.component';
 import { Injectable, ViewContainerRef, Type, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Axis } from '../../model/axis';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,58 +10,53 @@ export class PageDrawService {
 
   boardElementRefList: Array<ComponentRef<DrawElementComponent>> = [];
   boardElementObservable: Subject<BoardElement>;
-  dragCenterAxis: {
-    x: any,
-    y: any
-  } = {
-      x: 0,
-      y: 0
-    }
-  dragAxis: {
-    x: number,
-    y: number
-  } = {
-      x: 0,
-      y: 0
-    }
+
+  offsetAxis: Axis;
+  dragAxis: Axis;
+
   constructor(private resolver: ComponentFactoryResolver) { }
 
-  createElement<T> (boardContainer: ViewContainerRef, component: Type<T>): ComponentRef<T> {
+  createElement<T>(boardContainer: ViewContainerRef, component: Type<T>): ComponentRef<T> {
     const factory = this.resolver.resolveComponentFactory<T>(component);
     const boardElementRef = boardContainer.createComponent<T>(factory);
     return boardElementRef;
   }
 
-  addBoardElementRef (componentRef: ComponentRef<DrawElementComponent>): void {
+  addBoardElementRef(componentRef: ComponentRef<DrawElementComponent>): void {
     this.boardElementRefList.push(componentRef);
   }
 
   // draw-element & draw-board 通讯
-  setBoardElementObservable (): void {
+  setBoardElementObservable(): void {
     this.boardElementObservable = new Subject<BoardElement>();
   }
-  getBoardElementObservable (): Subject<BoardElement> {
+  getBoardElementObservable(): Subject<BoardElement> {
     return this.boardElementObservable;
   }
-  destoryElementById (id: number) {
+  destoryElementById(id: number) {
     for (let boardElementRef of this.boardElementRefList) {
       if (id === boardElementRef.instance.boardElement.id) {
         boardElementRef.destroy();
       }
     }
   }
-  saveDragAxis ($event: any): void {
-    this.dragCenterAxis.y = $event.currentTarget.offsetHeight / 2;
-    this.dragCenterAxis.x = $event.currentTarget.offsetWidth / 2;
-    this.dragAxis.x = $event.offestX;
-    this.dragAxis.y = $event.offestY;
+  saveDragAxis(x: number, y: number): void {
+    this.dragAxis = new Axis(x, y);
+    console.log('start');
+    console.log(this.dragAxis);
   }
 
-  calcOffsetDragAxis ($event: any): void {
-
+  calcOffsetDragAxis(x: number, y: number): void {
+    console.log({
+      currentX: x,
+      currentY: y
+    });
+    this.offsetAxis = new Axis(x - this.dragAxis.x, y - this.dragAxis.y);
+    console.log('offset');
+    console.log(this.offsetAxis);
   }
 
-  resetDragAxis (): void {
+  resetDragAxis(): void {
     this.dragAxis.x = 0;
     this.dragAxis.y = 0;
   }
@@ -69,7 +65,7 @@ export class PageDrawService {
    * @param boardElement
    * {id:1,width:2} ==> 'width:2;' 
    */
-  parseStyleToStr (boardElement: BoardElement): string {
+  parseStyleToStr(boardElement: BoardElement): string {
 
     let style = this.addPxUnit(boardElement);
 
@@ -85,12 +81,12 @@ export class PageDrawService {
       return prev + curr;
     });
   }
-  addStyle (target: any, styleInline: string) {
+  addStyle(target: any, styleInline: string) {
     target.setAttribute(
       'style', styleInline
     );
   }
-  addPxUnit (boardElement: BoardElement): any {
+  addPxUnit(boardElement: BoardElement): any {
     let style = Object.assign({}, boardElement);
     let properties = ['height', 'width', 'font-size', 'border-width', 'border-radius', 'top', 'bottom', 'left', 'right'];
     let unit = 'px';

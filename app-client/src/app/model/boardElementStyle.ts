@@ -10,4 +10,8 @@ export class BoardElementStyle {
     'border-style': string;
     'border-width'?: string;
     'background-color'?: string;
+    top: string;
+    bottom?: string;
+    left: string;
+    right?: string;
 }
