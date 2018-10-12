@@ -16,6 +16,7 @@ import { PageTemplateListComponent } from './page/page-template-list/page-templa
 import { DrawElementComponent } from './page/page-draw/draw-element/draw-element.component';
 import { DrawBoardComponent } from './page/page-draw/draw-board/draw-board.component';
 import { StylePipe } from './pipe/style.pipe';
+import { DeformationDirective } from './directive/deformation.directive';
 // ng-zorro end
 
 registerLocaleData(zh);
@@ -29,7 +30,8 @@ registerLocaleData(zh);
     PageTemplateListComponent,
     DrawElementComponent,
     DrawBoardComponent,
-    StylePipe
+    StylePipe,
+    DeformationDirective
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, BrowserAnimationsModule, HttpClientModule, NgZorroAntdModule
