@@ -47,6 +47,14 @@ export class PageDrawService {
     }
     return null;
   }
+  getBoardElementRefById (id: number): ComponentRef<DrawElementComponent> {
+    for (let boardElementRef of this.boardElementRefList) {
+      if (boardElementRef.instance.boardElement.id === id) {
+        return boardElementRef;
+      }
+    }
+    return null;
+  }
   destoryElementById (id: number) {
     this.beforeClientAxis.x = 0;
     this.beforeClientAxis.y = 0;
@@ -56,6 +64,12 @@ export class PageDrawService {
       }
     }
   }
+  // 更新改变元素形状
+  updateBoardElementShape (boardElement: BoardElement): void {
+    let boardElementRef = this.getBoardElementRefById(boardElement.id);
+    boardElementRef.instance.boardElement = boardElement
+    boardElementRef.instance.boardElementStyle = this.addPxUnit(boardElement);
+  }
   // 记录起始坐标
   saveDragAxis ($event: DragEvent): void {
     this.beforeClientAxis.x = $event.clientX;
@@ -64,8 +78,8 @@ export class PageDrawService {
   // 计算拖动偏移量
   calcOffsetDragAxis ($event: DragEvent): void {
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
-    this.offsetAxis.x = $event.clientX - this.beforeClientAxis.x + this.offsetAxis.x;
-    this.offsetAxis.y = $event.clientY - this.beforeClientAxis.y + this.offsetAxis.y;
+    this.offsetAxis.x = $event.clientX - this.beforeClientAxis.x + this.currentBoardElement.left;//this.offsetAxis.x;
+    this.offsetAxis.y = $event.clientY - this.beforeClientAxis.y + this.currentBoardElement.top;//this.offsetAxis.y;
     this.checkDragAxis();
   }
   // 拖动界值，draw-board 中初始化

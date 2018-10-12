@@ -2,8 +2,10 @@
 > 记录整个项目大部分的问题，便于回溯
 
 ## Template parse errors:Can't bind to 'ngModel' since it isn't a known property of 'input'
-Although ngModel is a valid Angular directive, it isn't available by default.
+> Although ngModel is a valid Angular directive, it isn't available by default.
 It belongs to the optional FormsModule and you must opt-in to using it.
+
+缺少模块声明，并引入
 
 ````js
 import { FormsModule } from '@angular/forms';
@@ -38,9 +40,9 @@ import { RouterModule, Routes } from '@angular/router';
   }
 ````
 
-## (不要在constructor调用某些function做初始化)[https://angular.io/tutorial/toh-pt4#call-it-in-ngoninit]
+## [不要在constructor调用某些function做初始化](https://angular.io/tutorial/toh-pt4#call-it-in-ngoninit)
 构造函数简单用于属性赋值，不应该做方法的调用。甚至异步http等请求。
-最佳实践放在lifecycle hook处理。
+最佳实践放在 **lifecycle hook** 处理。
 
 ## 如何引入UI库（ng-zorro）
 执行如下命令即可，建议在新建项目时执行，因为会对原有项目部分文件自动做修改
@@ -52,7 +54,7 @@ ng add ng-zorro-antd
 ## Property 'xxx' does not exist on type 'XXComponent'
 注意ts中constructor和属性的用法。
 ````js
-// 添加private public ...
+// 添加private public 等修饰符 ...
 constructor(private route: ActivatedRoute) { }
 foo(){
   this.route //is ok
@@ -69,7 +71,7 @@ ng-zorro的tr和checkbox不可写在一起
 form 标签中需要如果有ngModel，则必须再添加name属性
 
 ## router定义无错，但访问xx链接无法更新xxComponent
-考虑是否有类似 **:id**的配置，会被匹配掉
+考虑是否路由中有类似 **:id**的配置规则，会被优先匹配
 
 ## 怎么做proxy
 angular.json
@@ -150,9 +152,6 @@ testChildHandle () {
 
 ## 如何定义Dynamic Component
 [使用@ViewChild装饰器](https://angular.io/api/core/ViewChild)
-````
-
-````
 
 ## Error: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'ngIf: undefined'. Current value: 'ngIf: true'. It seems like the view has been created after its parent and its children have been dirty checked. Has it been created in a change detection hook ?
 [https://github.com/angular/angular/issues/14748#issuecomment-312224737](https://github.com/angular/angular/issues/14748#issuecomment-312224737)
@@ -161,4 +160,8 @@ testChildHandle () {
 angular有自己一套渲染数据的方式，按照life cycle，从父组件到子组件传递。
 这个错，大致由于父子组件在初始的时候已经加载好数据，但由于业务需要在错误的生命周期中又再次赋值，导致数据渲染不符合angular的逻辑（比如 **ngAfterViewInit** ）；
 解决方法社区已给出，大致在何时的life cycle做处理，或者把业务逻辑改成异步，跳过angular的检查机制。
+
+## 动态组件如何做父子通讯
+使用Observable观察者模式，并且定义在Service确保监听的唯一
+动态组件有ComponentRef，可以使用熟悉instance调用到动态子组件的数据
 

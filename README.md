@@ -26,7 +26,7 @@
 ![简介](./doc/market.png)
 
 ## 功能展示（边做边出）
-
+![元素移动](./doc/show/element_move.gif)
 
 # TODO LIST
 待解决问题

@@ -9,14 +9,15 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 })
 export class DrawElementComponent implements OnInit {
 
+  // 在父组件中定义
   boardElement: BoardElement;
   boardElementStyle: string;
+
   showControl: boolean = false;
 
   constructor(private pageDrawService: PageDrawService) { }
 
   ngOnInit () {
-    console.log('DrawElementComponent');
   }
 
   destory () {
@@ -30,7 +31,6 @@ export class DrawElementComponent implements OnInit {
   @HostListener('mouseleave', ['$event.target'])
   mouseleave () {
     this.showControl = false;
-    // console.log(this.boardElement);
   }
 
   // 监听元素形状变化
@@ -38,10 +38,7 @@ export class DrawElementComponent implements OnInit {
     $event.stopPropagation();
   }
   dragStart ($event: DragEvent) {
-    this.pageDrawService.setBoardElementObservable();
-    this.pageDrawService.getBoardElementObservable().subscribe((boardElement: BoardElement) => {
-      this.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
-    })
+    console.log(this.boardElement.id);
     this.pageDrawService.saveDragAxis($event);
     $event.dataTransfer.setData('Text', String(this.boardElement.id));
   }

@@ -29,12 +29,12 @@ export class DrawBoardComponent implements OnInit {
 
   constructor(public el: ElementRef, private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.onBoardStyle();
     this.onBoardElement();
   }
   // 监听面板样式
-  onBoardStyle() {
+  onBoardStyle () {
     this.pageDrawService.saveLimitAxis(this.board.width, this.board.height);
     this.boardObservable.subscribe((board: Board) => {
       this.boardStyle = {
@@ -45,7 +45,7 @@ export class DrawBoardComponent implements OnInit {
     })
   }
   // 监听元素
-  onBoardElement() {
+  onBoardElement () {
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
       // create/focus boardElement
       if (!this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id)) {
@@ -55,35 +55,29 @@ export class DrawBoardComponent implements OnInit {
     })
   }
   // 创建元素
-  private createBoardElement(boardElement: BoardElement) {
+  private createBoardElement (boardElement: BoardElement) {
     const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
     elementRef.instance.boardElement = boardElement;
     elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
     this.pageDrawService.addBoardElementRef(elementRef);
   }
   // 拖拽
-  allowDrop($event) {
+  allowDrop ($event) {
     $event.preventDefault()
   }
   // 拖拽结束
-  drop($event: DragEvent) {
-    this.pageDrawService.calcOffsetDragAxis($event);
-    this.calcOffset(Number($event.dataTransfer.getData('Text')));
-    this.updateBoardElementEmit.emit(this.boardElement);
-    event.preventDefault();
-  }
-  // 计算元素移动量
-  private calcOffset(id: number) {
+  drop ($event: DragEvent) {
+    // 更新当前最新元素
+    let id = Number($event.dataTransfer.getData('Text'));
     this.boardElement = this.pageDrawService.getCurrentBoardELementById(id);
+    this.pageDrawService.currentBoardElement = this.boardElement;
+    // 更新偏移量
+    this.pageDrawService.calcOffsetDragAxis($event);
     this.boardElement.top = this.pageDrawService.offsetAxis.y;
     this.boardElement.left = this.pageDrawService.offsetAxis.x;
-    this.pageDrawService.getBoardElementObservable().next(this.boardElement);
-    // for (let boardElementRef of this.pageDrawService.boardElementRefList) {
-    //   if (boardElementRef.instance.boardElement.id === id) {
-    //     boardElementRef.instance.boardElement.top = this.pageDrawService.offsetAxis.y;
-    //     boardElementRef.instance.boardElement.left = this.pageDrawService.offsetAxis.x;
-    //     this.pageDrawService.getBoardElementObservable().next(boardElementRef.instance.boardElement);
-    //   }
-    // }
+    this.pageDrawService.updateBoardElementShape(this.boardElement);
+    // 通知draw-board
+    this.updateBoardElementEmit.emit(this.boardElement);
+    event.preventDefault();
   }
 }
