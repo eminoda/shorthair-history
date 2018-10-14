@@ -5,16 +5,29 @@ import { Directive, HostListener } from '@angular/core';
 })
 export class DeformationDirective {
 
+  top: number = 0;
+  left: number = 0;
+
   constructor() { }
 
-  @HostListener('mousedown', ['$event.target'])
-  mousedown ($event) {
-    console.log('enter');
-    console.log($event.offsetTop);
+  @HostListener('pointerdown', ['$event'])
+  pointerdown($event: Event) {
+    let element = <HTMLElement>(event.target);
+    let parentElement = this.getParentElement(element);
+    this.top = parentElement.offsetTop;
+    this.left = parentElement.offsetLeft;
+    console.log('down');
+    $event.preventDefault();
   }
-  @HostListener('mouseup', ['$event.target'])
-  mouseleave ($event) {
-    console.log(222);
-    console.log($event);
+  @HostListener('pointermove', ['$event'])
+  pointerleave($event: PointerEvent) {
+    console.log($event.layerX);
+    let element = <HTMLElement>(event.target);
+    let parentElement = this.getParentElement(element);
+    console.log('up');
+    $event.preventDefault();
+  }
+  private getParentElement(element: HTMLElement): HTMLElement {
+    return element.parentElement;
   }
 }
