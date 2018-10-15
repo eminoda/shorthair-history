@@ -1,8 +1,9 @@
-<div class="draw-element" draggable="true" (click)="showControlPanel()" (dragstart)="dragStart($event)" [id]="boardElement.id"
+<div class="draw-element" (click)="showControlPanel()" draggable="true" (dragstart)="dragStart($event)" [id]="boardElement.id"
   [ngStyle]="boardElementStyle" *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.id}}
 </div>
 
-<div *ngIf="showControl" [ngStyle]="panelStyle" class="control-panel">
+<div *ngIf="showControl" (click)="showControlPanel()" [ngStyle]="panelStyle" class="control-panel" draggable="true"
+  (dragstart)="dragStart($event)">
   <app-deformation direction="nw" class="position-top-left"></app-deformation>
   <app-deformation direction="ne" class="position-top-right"></app-deformation>
   <app-deformation direction="sw" class="position-bottom-left"></app-deformation>

@@ -25,7 +25,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>高</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="height" nz-input placeholder="高" [(ngModel)]="boardElement.height">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="boardElement.height" (ngModelChange)="setBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>

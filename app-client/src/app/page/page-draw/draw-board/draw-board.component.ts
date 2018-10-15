@@ -29,7 +29,7 @@ export class DrawBoardComponent implements OnInit {
 
   constructor(public el: ElementRef, private pageDrawService: PageDrawService) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this.onBoardStyle();
     this.onBoardElement();
     this.pageDrawService.getBoardElementObservable().subscribe(data => {
@@ -37,8 +37,10 @@ export class DrawBoardComponent implements OnInit {
     })
   }
   // 监听面板样式
-  onBoardStyle () {
+  onBoardStyle() {
+    // 保存手机模型的尺寸，用于计算最值
     this.pageDrawService.saveLimitAxis(this.board.width, this.board.height);
+    // 监听input输入
     this.boardObservable.subscribe((board: Board) => {
       this.boardStyle = {
         width: board.width + 'px',
@@ -48,29 +50,35 @@ export class DrawBoardComponent implements OnInit {
     })
   }
   // 监听元素
-  onBoardElement () {
+  onBoardElement() {
+    // 监听input输入
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
       console.log('boardElement change');
       // create/focus boardElement
-      if (!this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id)) {
+      let boardElement = this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id);
+      if (!boardElement) {
+        // 创建新元素
         this.createBoardElement(currentBoardElement);
+        this.pageDrawService.currentBoardElement = currentBoardElement;
+      } else {
+        boardElement = currentBoardElement;
+        this.pageDrawService.currentBoardElement = boardElement;
       }
-      this.pageDrawService.currentBoardElement = currentBoardElement;
     })
   }
   // 创建元素
-  private createBoardElement (boardElement: BoardElement) {
+  private createBoardElement(boardElement: BoardElement) {
     const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
     elementRef.instance.boardElement = boardElement;
     elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
     this.pageDrawService.addBoardElementRef(elementRef);
   }
   // 拖拽
-  allowDrop ($event) {
+  allowDrop($event) {
     $event.preventDefault()
   }
   // 拖拽结束
-  drop ($event: DragEvent) {
+  drop($event: DragEvent) {
     // 更新当前最新元素
     let id = Number($event.dataTransfer.getData('Text'));
     this.boardElement = this.pageDrawService.getCurrentBoardELementById(id);
@@ -87,7 +95,7 @@ export class DrawBoardComponent implements OnInit {
 
   // 鼠标释放，计算元素形变后尺寸
   @HostListener('pointerup', ['$event'])
-  pointerup ($event: PointerEvent) {
+  pointerup($event: PointerEvent) {
     console.log('pointerup');
     if (this.pageDrawService.shapSwitch && this.pageDrawService.direction) {
       // 计算形变
@@ -95,6 +103,6 @@ export class DrawBoardComponent implements OnInit {
       console.log(this.boardElement.id);
       this.pageDrawService.updateBoardElementShape(this.boardElement);
     }
-    // $event.preventDefault();
+    $event.preventDefault();
   }
 }

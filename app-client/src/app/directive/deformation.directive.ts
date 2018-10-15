@@ -12,18 +12,13 @@ export class DeformationDirective {
   constructor(private pageDrawService: PageDrawService) {
   }
 
-  @HostListener('pointerenter', ['$event'])
-  pointerenter ($event: PointerEvent) {
-    console.log(this.direction);
-    this.pageDrawService.direction = this.direction;
-    $event.preventDefault();
-  }
-
+  // 更新形变的
   // 考虑触控板，不用mouse
   @HostListener('pointerdown', ['$event'])
-  pointerdown ($event: PointerEvent) {
+  pointerdown($event: PointerEvent) {
     console.log('pointerdown in deformation');
-    console.log(this.direction); this.pageDrawService.shapSwitch = true;
+    this.pageDrawService.direction = this.direction;
+    this.pageDrawService.shapSwitch = true;
     this.pageDrawService.saveShapParams($event.clientX, $event.clientY, this.direction);
     $event.preventDefault();
   }

@@ -17,20 +17,23 @@ export class DrawElementComponent implements OnInit, DoCheck {
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit () {
+  ngOnInit() {
   }
 
-  ngDoCheck () {
+  ngDoCheck() {
     this.updatePanelStyle();
+    // this.updateBoardElementStyle();
   }
 
   // 显示控制元素形状面板
-  showControlPanel (): void {
-    this.showControl = true;
+  showControlPanel(): void {
+    this.showControl = !this.showControl;
     // this.pageDrawService.destoryElementById(this.boardElement.id);
   }
-
-  updatePanelStyle (): void {
+  updateBoardElementStyle(): void {
+    this.boardElementStyle = this.pageDrawService.addPxUnit(this.boardElement);
+  }
+  updatePanelStyle(): void {
     console.log('updatePanelStyle');
     this.panelStyle = {
       width: this.boardElement.width + 'px',
@@ -39,9 +42,15 @@ export class DrawElementComponent implements OnInit, DoCheck {
       left: this.boardElement.left + 'px'
     }
   }
-  dragStart ($event: DragEvent) {
+  dragStart($event: DragEvent) {
     console.log(this.boardElement.id);
     this.pageDrawService.saveDragAxis($event);
     $event.dataTransfer.setData('Text', String(this.boardElement.id));
+  }
+
+  @HostListener('blur', ['$event'])
+  blur($event: PointerEvent) {
+    console.log('blur');
+    $event.preventDefault();
   }
 }

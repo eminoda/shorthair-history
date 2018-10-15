@@ -40,9 +40,13 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
     this.boardObservable.next(board);
   }
 
+  setBoardElementConfig(boardElement: BoardElement) {
+    this.boardElementObservable.next(this.boardElement);
+  }
+
   createElement() {
     this.boardElement = new BoardElement();
-    this.boardElementObservable.next(this.boardElement);
+    this.setBoardElementConfig(this.boardElement);
   }
 
   preLook() {
