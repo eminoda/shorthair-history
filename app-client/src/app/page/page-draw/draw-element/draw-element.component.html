@@ -1,7 +1,10 @@
-<div draggable="true" (click)="destory()" (dragstart)="dragStart($event)" [id]="boardElement.id" [ngStyle]="boardElementStyle"
-  *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.id}}
-  <span *ngIf="showControl" draggable="false" appDeformation (click)="startListenChange($event)" class="position-top-left"></span>
-  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-top-right"></span>
-  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-bottom-left"></span>
-  <span *ngIf="showControl" (click)="startListenChange($event)" class="position-bottom-right"></span>
+<div class="draw-element" draggable="true" (click)="showControlPanel()" (dragstart)="dragStart($event)" [id]="boardElement.id"
+  [ngStyle]="boardElementStyle" *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.id}}
+</div>
+
+<div *ngIf="showControl" [ngStyle]="panelStyle" class="control-panel">
+  <app-deformation direction="nw" class="position-top-left"></app-deformation>
+  <app-deformation direction="ne" class="position-top-right"></app-deformation>
+  <app-deformation direction="sw" class="position-bottom-left"></app-deformation>
+  <app-deformation direction="se" class="position-bottom-right"></app-deformation>
 </div>

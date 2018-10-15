@@ -1,6 +1,6 @@
 
 import { Observable } from 'rxjs';
-import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentRef, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentRef, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 import { Board } from '../../../model/board';
 import { DrawElementComponent } from '../draw-element/draw-element.component';
 import { BoardElement } from '../../../model/boardElement';
@@ -32,6 +32,9 @@ export class DrawBoardComponent implements OnInit {
   ngOnInit () {
     this.onBoardStyle();
     this.onBoardElement();
+    this.pageDrawService.getBoardElementObservable().subscribe(data => {
+      this.pageDrawService.updateBoardElementShape(data);
+    })
   }
   // 监听面板样式
   onBoardStyle () {
@@ -47,6 +50,7 @@ export class DrawBoardComponent implements OnInit {
   // 监听元素
   onBoardElement () {
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
+      console.log('boardElement change');
       // create/focus boardElement
       if (!this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id)) {
         this.createBoardElement(currentBoardElement);
@@ -79,5 +83,18 @@ export class DrawBoardComponent implements OnInit {
     // 通知draw-board
     this.updateBoardElementEmit.emit(this.boardElement);
     event.preventDefault();
+  }
+
+  // 鼠标释放，计算元素形变后尺寸
+  @HostListener('pointerup', ['$event'])
+  pointerup ($event: PointerEvent) {
+    console.log('pointerup');
+    if (this.pageDrawService.shapSwitch && this.pageDrawService.direction) {
+      // 计算形变
+      this.boardElement = this.pageDrawService.calcShapOffset($event, this.pageDrawService.currentBoardElement);
+      console.log(this.boardElement.id);
+      this.pageDrawService.updateBoardElementShape(this.boardElement);
+    }
+    // $event.preventDefault();
   }
 }

@@ -1,18 +1,18 @@
 import { PageDrawService } from './../page-draw.service';
 import { BoardElement } from './../../../model/boardElement';
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-draw-element',
   templateUrl: './draw-element.component.html',
   styleUrls: ['./draw-element.component.scss']
 })
-export class DrawElementComponent implements OnInit {
+export class DrawElementComponent implements OnInit, DoCheck {
 
   // 在父组件中定义
   boardElement: BoardElement;
   boardElementStyle: string;
-
+  panelStyle: {};
   showControl: boolean = false;
 
   constructor(private pageDrawService: PageDrawService) { }
@@ -20,22 +20,24 @@ export class DrawElementComponent implements OnInit {
   ngOnInit () {
   }
 
-  destory () {
-    this.pageDrawService.destoryElementById(this.boardElement.id);
+  ngDoCheck () {
+    this.updatePanelStyle();
   }
 
-  @HostListener('mouseover', ['$event.target'])
-  mouseover () {
+  // 显示控制元素形状面板
+  showControlPanel (): void {
     this.showControl = true;
-  }
-  @HostListener('mouseleave', ['$event.target'])
-  mouseleave () {
-    this.showControl = false;
+    // this.pageDrawService.destoryElementById(this.boardElement.id);
   }
 
-  // 监听元素形状变化
-  startListenChange ($event: Event) {
-    $event.stopPropagation();
+  updatePanelStyle (): void {
+    console.log('updatePanelStyle');
+    this.panelStyle = {
+      width: this.boardElement.width + 'px',
+      height: this.boardElement.height + 'px',
+      top: this.boardElement.top + 'px',
+      left: this.boardElement.left + 'px'
+    }
   }
   dragStart ($event: DragEvent) {
     console.log(this.boardElement.id);

@@ -1,33 +1,30 @@
-import { Directive, HostListener } from '@angular/core';
+import { PageDrawService } from './../page/page-draw/page-draw.service';
+import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appDeformation]'
+  selector: 'app-deformation'
 })
 export class DeformationDirective {
 
-  top: number = 0;
-  left: number = 0;
+  // 方向
+  @Input() direction: string;
 
-  constructor() { }
+  constructor(private pageDrawService: PageDrawService) {
+  }
 
+  @HostListener('pointerenter', ['$event'])
+  pointerenter ($event: PointerEvent) {
+    console.log(this.direction);
+    this.pageDrawService.direction = this.direction;
+    $event.preventDefault();
+  }
+
+  // 考虑触控板，不用mouse
   @HostListener('pointerdown', ['$event'])
-  pointerdown($event: Event) {
-    let element = <HTMLElement>(event.target);
-    let parentElement = this.getParentElement(element);
-    this.top = parentElement.offsetTop;
-    this.left = parentElement.offsetLeft;
-    console.log('down');
+  pointerdown ($event: PointerEvent) {
+    console.log('pointerdown in deformation');
+    console.log(this.direction); this.pageDrawService.shapSwitch = true;
+    this.pageDrawService.saveShapParams($event.clientX, $event.clientY, this.direction);
     $event.preventDefault();
-  }
-  @HostListener('pointermove', ['$event'])
-  pointerleave($event: PointerEvent) {
-    console.log($event.layerX);
-    let element = <HTMLElement>(event.target);
-    let parentElement = this.getParentElement(element);
-    console.log('up');
-    $event.preventDefault();
-  }
-  private getParentElement(element: HTMLElement): HTMLElement {
-    return element.parentElement;
   }
 }

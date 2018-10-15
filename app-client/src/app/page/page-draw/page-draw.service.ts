@@ -9,12 +9,18 @@ import { Axis } from '../../model/axis';
 export class PageDrawService {
 
   boardElementRefList: Array<ComponentRef<DrawElementComponent>> = [];
-  boardElementObservable: Subject<BoardElement>;
+  boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();
 
   // 偏移量
   offsetAxis: Axis = new Axis(0, 0);
   // 左边起始点
   beforeClientAxis: Axis = new Axis(0, 0);
+  // 改变形状
+  shapClientAxis: Axis = new Axis(0, 0);
+  // 方向
+  direction: string;
+  // 改变形状开关，focus
+  shapSwitch = false;
   minLimitAxis: Axis;
   maxLimitAxis: Axis;
   // 当前元素，用于验证移动边界
@@ -33,7 +39,7 @@ export class PageDrawService {
   }
 
   // draw-element & draw-board 通讯
-  setBoardElementObservable (): void {
+  createBoardElementObservable (): void {
     this.boardElementObservable = new Subject<BoardElement>();
   }
   getBoardElementObservable (): Subject<BoardElement> {
@@ -75,6 +81,12 @@ export class PageDrawService {
     this.beforeClientAxis.x = $event.clientX;
     this.beforeClientAxis.y = $event.clientY;
   }
+  // 记录更改形状起始坐标
+  saveShapParams (x: number, y: number, direction: string): void {
+    this.shapClientAxis.x = x;
+    this.shapClientAxis.y = y;
+    this.direction = direction;
+  }
   // 计算拖动偏移量
   calcOffsetDragAxis ($event: DragEvent): void {
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
@@ -101,6 +113,41 @@ export class PageDrawService {
     if (this.offsetAxis.y < 0) {
       this.offsetAxis.y = 0;
     }
+  }
+  calcShapOffset ($event: PointerEvent, boardElement: BoardElement): BoardElement {
+    let offsetX = $event.clientX - this.shapClientAxis.x;
+    let offsetY = $event.clientY - this.shapClientAxis.y;
+    // 左上
+    console.log({
+      offsetX: offsetX,
+      offsetY: offsetY
+    });
+    console.log(boardElement);
+    if (this.direction == 'nw') {
+      boardElement.top = boardElement.top + offsetY;
+      boardElement.left = boardElement.left + offsetX;
+      boardElement.width = boardElement.width - offsetX;
+      boardElement.height = boardElement.height - offsetY;
+    } else if (this.direction = 'ne') {
+      boardElement.top = boardElement.top + offsetY;
+      boardElement.left = boardElement.left + offsetX;
+      boardElement.width = boardElement.width - offsetX;
+      boardElement.height = boardElement.height + offsetY;
+    } else if (this.direction = 'sw') {
+      boardElement.top = boardElement.top + offsetY;
+      boardElement.left = boardElement.left + offsetX;
+      boardElement.width = boardElement.width - offsetX;
+      boardElement.height = boardElement.height - offsetY;
+    } else if (this.direction = 'se') {
+      boardElement.top = boardElement.top;
+      boardElement.left = boardElement.left;
+      boardElement.width = boardElement.width + offsetX;
+      boardElement.height = boardElement.height + offsetY;
+    }
+    console.log(boardElement);
+    // 重新点击后生效
+    this.shapSwitch = false;
+    return boardElement;
   }
   /**
    * 解析面板元素对象

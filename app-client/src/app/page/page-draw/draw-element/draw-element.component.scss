@@ -1,48 +1,61 @@
-div {
+div.draw-element {
   cursor: move;
   -webkit-user-select: none;
-  /* Chrome all / Safari all */
   -moz-user-select: none;
-  /* Firefox all */
   -ms-user-select: none;
-  /* IE 10+ */
   user-select: none;
-  /* Likely future */
 }
 
-.position-top-left,
-.position-top-right,
-.position-bottom-left,
-.position-bottom-right {
-  height: 10px;
-  width: 10px;
-  border: 1px solid #333;
-  display: inline-block;
+.control-panel {
   position: absolute;
-  z-index: 99;
-  font-size: 0;
-}
+  z-index: 100;
+  border: 1px solid #EBEBEB;
 
-.position-top-left {
-  top: 0;
-  left: 0;
-  cursor: nw-resize;
-}
+  .position-top-left,
+  .position-top-right,
+  .position-bottom-left,
+  .position-bottom-right {
+    height: 6px;
+    width: 6px;
+    position: absolute;
+    display: block;
+    width: 7px;
+    height: 7px;
+    background: #fff;
+    border: 1px solid #000;
+    z-index: 99;
+    font-size: 0;
+  }
 
-.position-top-right {
-  top: 0;
-  right: 0;
-  cursor: ne-resize;
-}
+  .position-top-left {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+    margin-top: -4px;
+    margin-left: -4px;
+  }
 
-.position-bottom-left {
-  bottom: 0;
-  left: 0;
-  cursor: ne-resize;
-}
+  .position-top-right {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+    margin-top: -4px;
+    margin-right: -4px;
+  }
 
-.position-bottom-right {
-  bottom: 0;
-  right: 0;
-  cursor: nw-resize;
+  .position-bottom-left {
+    bottom: 0;
+    left: 0;
+    cursor: ne-resize;
+    margin-bottom: -4px;
+    margin-left: -4px;
+  }
+
+  .position-bottom-right {
+    bottom: 0;
+    right: 0;
+    cursor: nw-resize;
+    margin-bottom: -4px;
+    margin-right: -4px;
+  }
 }
