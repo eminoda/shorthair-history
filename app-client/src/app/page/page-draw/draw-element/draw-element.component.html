@@ -2,7 +2,7 @@
   [ngStyle]="boardElementStyle" *ngIf="boardElement&&boardElement.type=='button'">{{boardElementStyle.id}}
 </div>
 
-<div *ngIf="showControl" (click)="showControlPanel()" [ngStyle]="panelStyle" class="control-panel" draggable="true"
+<div *ngIf="showControl" (click)="showControlPanel()" [ngStyle]="maskStyle" class="control-panel" draggable="true"
   (dragstart)="dragStart($event)">
   <app-deformation direction="nw" class="position-top-left"></app-deformation>
   <app-deformation direction="ne" class="position-top-right"></app-deformation>

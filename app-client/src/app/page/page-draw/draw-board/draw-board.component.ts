@@ -16,10 +16,10 @@ export class DrawBoardComponent implements OnInit {
   @ViewChild('drawElement', { read: ViewContainerRef })
   boardContainer: ViewContainerRef;
 
+  @Input() board: Board;
+  @Input() boardElement: BoardElement;
   @Input() boardObservable: Observable<Board>;
   @Input() boardElementObservable: Observable<BoardElement>;
-  @Input() boardElement: BoardElement;
-  @Input() board: Board;
   @Output() updateBoardElementEmit: EventEmitter<BoardElement> = new EventEmitter();
 
   boardStyle: {};
@@ -29,15 +29,16 @@ export class DrawBoardComponent implements OnInit {
 
   constructor(public el: ElementRef, private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.onBoardStyle();
     this.onBoardElement();
     this.pageDrawService.getBoardElementObservable().subscribe(data => {
+      console.log('??');
       this.pageDrawService.updateBoardElementShape(data);
     })
   }
   // 监听面板样式
-  onBoardStyle() {
+  onBoardStyle () {
     // 保存手机模型的尺寸，用于计算最值
     this.pageDrawService.saveLimitAxis(this.board.width, this.board.height);
     // 监听input输入
@@ -50,58 +51,53 @@ export class DrawBoardComponent implements OnInit {
     })
   }
   // 监听元素
-  onBoardElement() {
+  onBoardElement () {
     // 监听input输入
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
       console.log('boardElement change');
       // create/focus boardElement
-      let boardElement = this.pageDrawService.getCurrentBoardELementById(currentBoardElement.id);
-      if (!boardElement) {
-        // 创建新元素
-        this.createBoardElement(currentBoardElement);
-        this.pageDrawService.currentBoardElement = currentBoardElement;
-      } else {
-        boardElement = currentBoardElement;
-        this.pageDrawService.currentBoardElement = boardElement;
-      }
+      let boardElementRef = this.pageDrawService.getBoardElementRefById(currentBoardElement.id);
+      boardElementRef = boardElementRef ? boardElementRef : this.createBoardElement();
+      this.pageDrawService.udpateBoardElementRef(boardElementRef, currentBoardElement);
+      this.pageDrawService.updateCurrentBoardElement(currentBoardElement);
     })
   }
   // 创建元素
-  private createBoardElement(boardElement: BoardElement) {
-    const elementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
-    elementRef.instance.boardElement = boardElement;
-    elementRef.instance.boardElementStyle = this.pageDrawService.addPxUnit(boardElement);
-    this.pageDrawService.addBoardElementRef(elementRef);
+  private createBoardElement (): ComponentRef<DrawElementComponent> {
+    let boardElementRef = this.pageDrawService.createElement<DrawElementComponent>(this.boardContainer, DrawElementComponent);
+    this.pageDrawService.addBoardElementRef(boardElementRef);
+    return boardElementRef;
   }
   // 拖拽
-  allowDrop($event) {
+  allowDrop ($event) {
     $event.preventDefault()
   }
   // 拖拽结束
-  drop($event: DragEvent) {
+  drop ($event: DragEvent) {
     // 更新当前最新元素
     let id = Number($event.dataTransfer.getData('Text'));
-    this.boardElement = this.pageDrawService.getCurrentBoardELementById(id);
-    this.pageDrawService.currentBoardElement = this.boardElement;
+    let boardElement = this.pageDrawService.getCurrentBoardELementById(id);
+    this.pageDrawService.updateCurrentBoardElement(boardElement);
     // 更新偏移量
     this.pageDrawService.calcOffsetDragAxis($event);
-    this.boardElement.top = this.pageDrawService.offsetAxis.y;
-    this.boardElement.left = this.pageDrawService.offsetAxis.x;
-    this.pageDrawService.updateBoardElementShape(this.boardElement);
+    boardElement.top = this.pageDrawService.offsetAxis.y;
+    boardElement.left = this.pageDrawService.offsetAxis.x;
+    // 更新boardElement& boardElement mask
+    this.pageDrawService.updateBoardElementShape(boardElement);
     // 通知draw-board
-    this.updateBoardElementEmit.emit(this.boardElement);
+    this.updateBoardElementEmit.emit(boardElement);
     event.preventDefault();
   }
 
   // 鼠标释放，计算元素形变后尺寸
   @HostListener('pointerup', ['$event'])
-  pointerup($event: PointerEvent) {
-    console.log('pointerup');
+  pointerup ($event: PointerEvent) {
     if (this.pageDrawService.shapSwitch && this.pageDrawService.direction) {
       // 计算形变
-      this.boardElement = this.pageDrawService.calcShapOffset($event, this.pageDrawService.currentBoardElement);
-      console.log(this.boardElement.id);
-      this.pageDrawService.updateBoardElementShape(this.boardElement);
+      let boardElement = this.pageDrawService.calcShapOffset($event, this.pageDrawService.currentBoardElement);
+      this.pageDrawService.updateBoardElementShape(boardElement);
+      // 通知draw-board
+      this.updateBoardElementEmit.emit(boardElement);
     }
     $event.preventDefault();
   }

@@ -7,7 +7,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>设备高</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="height" nz-input placeholder="高" [(ngModel)]="board.height" (ngModelChange)="setBoardConfig(board)">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="board.height" (ngModelChange)="updateBoardConfig(board)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -15,7 +15,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>设备宽</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="width" nz-input placeholder="高" [(ngModel)]="board.width" (ngModelChange)="setBoardConfig(board)">
+            <input name="width" nz-input placeholder="高" [(ngModel)]="board.width" (ngModelChange)="updateBoardConfig(board)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -25,7 +25,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>高</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="height" nz-input placeholder="高" [(ngModel)]="boardElement.height" (ngModelChange)="setBoardElementConfig(boardElement)">
+            <input name="height" nz-input placeholder="高" [(ngModel)]="boardElement.height" (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -33,7 +33,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>宽</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="width" nz-input placeholder="高" [(ngModel)]="boardElement.width">
+            <input name="width" nz-input placeholder="高" [(ngModel)]="boardElement.width" (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -44,7 +44,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>边宽</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="border-width" nz-input placeholder="边宽" [(ngModel)]="boardElement['border-width']">
+            <input name="border-width" nz-input placeholder="边宽" [(ngModel)]="boardElement['border-width']"
+              (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -52,18 +53,37 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>边框颜色</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="border-color" nz-input placeholder="边框颜色" [(ngModel)]="boardElement['border-color']">
+            <input name="border-color" nz-input placeholder="边框颜色" [(ngModel)]="boardElement['border-color']"
+              (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-
+    <nz-row>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>偏移量top</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="top" nz-input placeholder="偏移量top" [(ngModel)]="boardElement['top']" (ngModelChange)="updateBoardElementConfig(boardElement)">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzSpan="12" nzRequired>偏移量left</nz-form-label>
+          <nz-form-control nzSpan="12">
+            <input name="left" nz-input placeholder="偏移量left" [(ngModel)]="boardElement['left']" (ngModelChange)="updateBoardElementConfig(boardElement)">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
     <nz-row>
       <nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景色</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="background-color" nz-input placeholder="背景色" [(ngModel)]="boardElement['background-color']">
+            <input name="background-color" nz-input placeholder="背景色" [(ngModel)]="boardElement['background-color']"
+              (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -71,7 +91,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name" nzSpan="12" nzRequired>背景图片</nz-form-label>
           <nz-form-control nzSpan="12">
-            <input name="background-image" nz-input placeholder="背景图片" [(ngModel)]="boardElement['background-image']">
+            <input name="background-image" nz-input placeholder="背景图片" [(ngModel)]="boardElement['background-image']"
+              (ngModelChange)="updateBoardElementConfig(boardElement)">
           </nz-form-control>
         </nz-form-item>
       </nz-col>

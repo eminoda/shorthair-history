@@ -1,7 +1,7 @@
 import { PageDrawService } from './page-draw.service';
 import { BoardElement } from './../../model/boardElement';
 import { Subject } from 'rxjs';
-import { Component, OnInit, AfterContentInit, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Panel } from '../../model/panel';
 import { Board } from '../../model/board';
 
@@ -27,35 +27,45 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
   }
-  ngAfterViewInit() {
+  ngAfterViewInit () {
     let self = this;
     setTimeout(function () {
+      // todo，首次渲染加载
       // self.createElement();
     }, 500)
   }
-  setBoardConfig(board) {
+  // 设置board
+  updateBoardConfig (board) {
     // this.board = Object.assign({}, this.board);
     this.boardObservable.next(board);
   }
-
-  setBoardElementConfig(boardElement: BoardElement) {
-    this.boardElementObservable.next(this.boardElement);
+  // 设置boardElement
+  updateBoardElementConfig (boardElement: BoardElement) {
+    this.boardElementObservable.next(boardElement);
   }
 
-  createElement() {
+  createElement () {
     this.boardElement = new BoardElement();
-    this.setBoardElementConfig(this.boardElement);
+    this.updateBoardElementConfig(this.boardElement);
   }
 
-  preLook() {
-    let style = this.pageDrawService.addPxUnit(this.boardElement);
-    console.log(this.boardElement);
+  // 预览
+  preLook () {
+    let currentBoardElement = this.pageDrawService.currentBoardElement;
+    if (currentBoardElement) {
+      this.boardElement = currentBoardElement;
+      console.log('prelook:' + this.boardElement.id);
+      let style = this.pageDrawService.addPxUnit(this.boardElement);
+    } else {
+      console.log('没有创建');
+    }
   }
 
-  // draw-board call
-  updateBoardElement(boardElement: BoardElement) {
+  // draw-board call，虽然有array作为引用，但还是为了逻辑性。去掉此方法也是可以的
+  updateBoardElement (boardElement: BoardElement) {
+    console.log('board call me change');
     this.boardElement = boardElement;
   }
 }

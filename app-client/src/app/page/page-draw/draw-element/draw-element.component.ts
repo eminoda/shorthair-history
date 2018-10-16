@@ -1,6 +1,6 @@
 import { PageDrawService } from './../page-draw.service';
 import { BoardElement } from './../../../model/boardElement';
-import { Component, OnInit, HostListener, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-draw-element',
@@ -12,45 +12,38 @@ export class DrawElementComponent implements OnInit, DoCheck {
   // 在父组件中定义
   boardElement: BoardElement;
   boardElementStyle: string;
-  panelStyle: {};
+  maskStyle: {};
   showControl: boolean = false;
 
   constructor(private pageDrawService: PageDrawService) { }
 
-  ngOnInit() {
+  ngOnInit () {
   }
 
-  ngDoCheck() {
-    this.updatePanelStyle();
+  ngDoCheck () {
+    this.updateMaskStyle();
     // this.updateBoardElementStyle();
   }
 
   // 显示控制元素形状面板
-  showControlPanel(): void {
+  showControlPanel (): void {
     this.showControl = !this.showControl;
     // this.pageDrawService.destoryElementById(this.boardElement.id);
   }
-  updateBoardElementStyle(): void {
+  updateBoardElementStyle (): void {
     this.boardElementStyle = this.pageDrawService.addPxUnit(this.boardElement);
   }
-  updatePanelStyle(): void {
-    console.log('updatePanelStyle');
-    this.panelStyle = {
+  updateMaskStyle (): void {
+    console.log('updateMaskStyle');
+    this.maskStyle = {
       width: this.boardElement.width + 'px',
       height: this.boardElement.height + 'px',
       top: this.boardElement.top + 'px',
       left: this.boardElement.left + 'px'
     }
   }
-  dragStart($event: DragEvent) {
-    console.log(this.boardElement.id);
+  dragStart ($event: DragEvent) {
     this.pageDrawService.saveDragAxis($event);
     $event.dataTransfer.setData('Text', String(this.boardElement.id));
-  }
-
-  @HostListener('blur', ['$event'])
-  blur($event: PointerEvent) {
-    console.log('blur');
-    $event.preventDefault();
   }
 }
