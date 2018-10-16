@@ -1,10 +1,11 @@
-import { PageDrawService } from './page-draw.service';
-import { BoardElement } from './../../model/boardElement';
-import { Subject } from 'rxjs';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { BoardElement } from './../../model/boardElement';
+import { PageDrawService } from './page-draw.service';
+import { UtilService } from '../../service/util.service';
 import { Panel } from '../../model/panel';
 import { Board } from '../../model/board';
-
+import { Prompt } from '../../util/prompt';
 @Component({
   selector: 'app-page-draw',
   templateUrl: './page-draw.component.html',
@@ -22,12 +23,15 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
   pageDraw: Panel = new Panel()
   board: Board = new Board();
   boardObservable: Subject<Board> = new Subject<Board>();
-  boardElement: BoardElement = new BoardElement();
+  boardElement: BoardElement;
   boardElementObservable: Subject<BoardElement> = new Subject<BoardElement>();//button(href,click),image,template
+  prompt = Prompt
 
-  constructor(private pageDrawService: PageDrawService) { }
+  constructor(private pageDrawService: PageDrawService,
+    private utilService: UtilService) { }
 
   ngOnInit () {
+    console.log(this.prompt);
   }
   ngAfterViewInit () {
     let self = this;
@@ -46,7 +50,7 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
     this.boardElementObservable.next(boardElement);
   }
 
-  createElement () {
+  create () {
     this.boardElement = new BoardElement();
     this.updateBoardElementConfig(this.boardElement);
   }
@@ -59,10 +63,17 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
       console.log('prelook:' + this.boardElement.id);
       let style = this.pageDrawService.addPxUnit(this.boardElement);
     } else {
-      console.log('没有创建');
+      this.utilService.openErrorModal(this.prompt.ERROR_BOARDELEMENT_NOCREATE)
     }
   }
 
+  delete () {
+    if (this.boardElement) {
+      this.pageDrawService.destoryElementById(this.boardElement.id);
+    } else {
+      this.utilService.openErrorModal(this.prompt.ERROR_BOARDELEMENT_NOCREATE)
+    }
+  }
   // draw-board call，虽然有array作为引用，但还是为了逻辑性。去掉此方法也是可以的
   updateBoardElement (boardElement: BoardElement) {
     console.log('board call me change');

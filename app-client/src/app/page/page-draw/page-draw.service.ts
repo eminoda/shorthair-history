@@ -70,10 +70,12 @@ export class PageDrawService {
       }
     }
   }
+  // 更新boardELement引用
   udpateBoardElementRef (boardElementRef: ComponentRef<DrawElementComponent>, boardElement: BoardElement): void {
     boardElementRef.instance.boardElement = boardElement;
     boardElementRef.instance.boardElementStyle = this.addPxUnit(boardElement);
   }
+  // 更新currentBoardELement，用于不同组件间的boardElement更改
   updateCurrentBoardElement (boardELement: BoardElement) {
     this.currentBoardElement = boardELement;
   }
@@ -82,6 +84,12 @@ export class PageDrawService {
     let boardElementRef = this.getBoardElementRefById(boardElement.id);
     boardElementRef.instance.boardElement = boardElement
     boardElementRef.instance.boardElementStyle = this.addPxUnit(boardElement);
+    boardElementRef.instance.maskStyle = {
+      width: boardElement.width + 'px',
+      height: boardElement.height + 'px',
+      top: boardElement.top + 'px',
+      left: boardElement.left + 'px'
+    }
   }
   // 记录起始坐标
   saveDragAxis ($event: DragEvent): void {

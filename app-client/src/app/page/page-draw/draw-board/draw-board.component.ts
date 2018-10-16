@@ -54,7 +54,6 @@ export class DrawBoardComponent implements OnInit {
   onBoardElement () {
     // 监听input输入
     this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
-      console.log('boardElement change');
       // create/focus boardElement
       let boardElementRef = this.pageDrawService.getBoardElementRefById(currentBoardElement.id);
       boardElementRef = boardElementRef ? boardElementRef : this.createBoardElement();
