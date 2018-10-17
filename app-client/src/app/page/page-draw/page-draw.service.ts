@@ -72,17 +72,9 @@ export class PageDrawService {
   }
   // 更新boardELement引用
   udpateBoardElementRef (boardElementRef: ComponentRef<DrawElementComponent>, boardElement: BoardElement): void {
+    // 刷新当前元素
+    this.updateCurrentBoardElement(boardElement);
     boardElementRef.instance.boardElement = boardElement;
-    boardElementRef.instance.boardElementStyle = this.addPxUnit(boardElement);
-  }
-  // 更新currentBoardELement，用于不同组件间的boardElement更改
-  updateCurrentBoardElement (boardELement: BoardElement) {
-    this.currentBoardElement = boardELement;
-  }
-  // 更新改变元素形状
-  updateBoardElementShape (boardElement: BoardElement): void {
-    let boardElementRef = this.getBoardElementRefById(boardElement.id);
-    boardElementRef.instance.boardElement = boardElement
     boardElementRef.instance.boardElementStyle = this.addPxUnit(boardElement);
     boardElementRef.instance.maskStyle = {
       width: boardElement.width + 'px',
@@ -90,6 +82,15 @@ export class PageDrawService {
       top: boardElement.top + 'px',
       left: boardElement.left + 'px'
     }
+  }
+  // 更新currentBoardELement，用于不同组件间的boardElement更改
+  private updateCurrentBoardElement (boardELement: BoardElement) {
+    this.currentBoardElement = boardELement;
+  }
+  // 重新渲染
+  renderBoardELement (boardElement: BoardElement): void {
+    let boardElementRef = this.getBoardElementRefById(boardElement.id);
+    boardElementRef && this.udpateBoardElementRef(boardElementRef, boardElement);
   }
   // 记录起始坐标
   saveDragAxis ($event: DragEvent): void {
@@ -103,7 +104,9 @@ export class PageDrawService {
     this.direction = direction;
   }
   // 计算拖动偏移量
-  calcOffsetDragAxis ($event: DragEvent): void {
+  calcOffsetDragAxis ($event: DragEvent, boardElement: BoardElement): void {
+    // 不同boardElement切换，需要重新计算当前元素参数
+    this.updateCurrentBoardElement(boardElement);
     // console.log(`clientX:${$event.clientX},clientY:${$event.clientY},layerX:${$event.layerX},layerY:${$event.layerY},offsetX:${$event.offsetX},offsetY:${$event.offsetY},pageX:${$event.pageX},pageY:${$event.pageY}`);
     this.offsetAxis.x = $event.clientX - this.beforeClientAxis.x + this.currentBoardElement.left;//this.offsetAxis.x;
     this.offsetAxis.y = $event.clientY - this.beforeClientAxis.y + this.currentBoardElement.top;//this.offsetAxis.y;

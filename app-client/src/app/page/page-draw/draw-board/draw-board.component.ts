@@ -32,10 +32,6 @@ export class DrawBoardComponent implements OnInit {
   ngOnInit () {
     this.onBoardStyle();
     this.onBoardElement();
-    this.pageDrawService.getBoardElementObservable().subscribe(data => {
-      console.log('??');
-      this.pageDrawService.updateBoardElementShape(data);
-    })
   }
   // 监听面板样式
   onBoardStyle () {
@@ -53,12 +49,12 @@ export class DrawBoardComponent implements OnInit {
   // 监听元素
   onBoardElement () {
     // 监听input输入
-    this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
+    // this.boardElementObservable.subscribe((currentBoardElement: BoardElement) => {
+    this.pageDrawService.getBoardElementObservable().subscribe((currentBoardElement: BoardElement) => {
       // create/focus boardElement
       let boardElementRef = this.pageDrawService.getBoardElementRefById(currentBoardElement.id);
       boardElementRef = boardElementRef ? boardElementRef : this.createBoardElement();
       this.pageDrawService.udpateBoardElementRef(boardElementRef, currentBoardElement);
-      this.pageDrawService.updateCurrentBoardElement(currentBoardElement);
     })
   }
   // 创建元素
@@ -76,13 +72,12 @@ export class DrawBoardComponent implements OnInit {
     // 更新当前最新元素
     let id = Number($event.dataTransfer.getData('Text'));
     let boardElement = this.pageDrawService.getCurrentBoardELementById(id);
-    this.pageDrawService.updateCurrentBoardElement(boardElement);
     // 更新偏移量
-    this.pageDrawService.calcOffsetDragAxis($event);
+    this.pageDrawService.calcOffsetDragAxis($event, boardElement);
     boardElement.top = this.pageDrawService.offsetAxis.y;
     boardElement.left = this.pageDrawService.offsetAxis.x;
     // 更新boardElement& boardElement mask
-    this.pageDrawService.updateBoardElementShape(boardElement);
+    this.pageDrawService.renderBoardELement(boardElement);
     // 通知draw-board
     this.updateBoardElementEmit.emit(boardElement);
     event.preventDefault();
@@ -94,7 +89,7 @@ export class DrawBoardComponent implements OnInit {
     if (this.pageDrawService.shapSwitch && this.pageDrawService.direction) {
       // 计算形变
       let boardElement = this.pageDrawService.calcShapOffset($event, this.pageDrawService.currentBoardElement);
-      this.pageDrawService.updateBoardElementShape(boardElement);
+      this.pageDrawService.renderBoardELement(boardElement);
       // 通知draw-board
       this.updateBoardElementEmit.emit(boardElement);
     }

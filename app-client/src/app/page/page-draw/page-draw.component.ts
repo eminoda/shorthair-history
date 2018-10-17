@@ -31,7 +31,6 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
     private utilService: UtilService) { }
 
   ngOnInit () {
-    console.log(this.prompt);
   }
   ngAfterViewInit () {
     let self = this;
@@ -47,7 +46,8 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
   }
   // 设置boardElement
   updateBoardElementConfig (boardElement: BoardElement) {
-    this.boardElementObservable.next(boardElement);
+    // this.boardElementObservable.next(boardElement);
+    this.pageDrawService.getBoardElementObservable().next(boardElement);
   }
 
   create () {
@@ -70,6 +70,7 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
   delete () {
     if (this.boardElement) {
       this.pageDrawService.destoryElementById(this.boardElement.id);
+      this.boardElement = null;
     } else {
       this.utilService.openErrorModal(this.prompt.ERROR_BOARDELEMENT_NOCREATE)
     }
