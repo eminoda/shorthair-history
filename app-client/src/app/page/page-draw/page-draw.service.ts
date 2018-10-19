@@ -64,9 +64,12 @@ export class PageDrawService {
   destoryElementById (id: number) {
     this.beforeClientAxis.x = 0;
     this.beforeClientAxis.y = 0;
-    for (let boardElementRef of this.boardElementRefList) {
+    for (let i = 0; i < this.boardElementRefList.length; i++) {
+      let boardElementRef = this.boardElementRefList[i];
       if (id === boardElementRef.instance.boardElement.id) {
         boardElementRef.destroy();
+        this.boardElementRefList.splice(Number(i), 1)
+        this.updateCurrentBoardElement(null);
       }
     }
   }
@@ -84,7 +87,7 @@ export class PageDrawService {
     }
   }
   // 更新currentBoardELement，用于不同组件间的boardElement更改
-  private updateCurrentBoardElement (boardELement: BoardElement) {
+  updateCurrentBoardElement (boardELement: BoardElement) {
     this.currentBoardElement = boardELement;
   }
   // 重新渲染

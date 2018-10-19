@@ -5,6 +5,8 @@ import { Board } from '../../../model/board';
 import { DrawElementComponent } from '../draw-element/draw-element.component';
 import { BoardElement } from '../../../model/boardElement';
 import { PageDrawService } from '../page-draw.service';
+import { UtilService } from '../../../service/util.service';
+import { Prompt } from '../../../util/prompt';
 
 @Component({
   selector: 'app-draw-board',
@@ -26,8 +28,9 @@ export class DrawBoardComponent implements OnInit {
   boardElementRef: ComponentRef<DrawElementComponent>;
   offsetX: number = 0;
   offsetY: number = 0;
-
-  constructor(public el: ElementRef, private pageDrawService: PageDrawService) { }
+  prompt = Prompt;
+  constructor(public el: ElementRef, private pageDrawService: PageDrawService,
+    private utilService: UtilService) { }
 
   ngOnInit () {
     this.onBoardStyle();
@@ -72,6 +75,10 @@ export class DrawBoardComponent implements OnInit {
     // 更新当前最新元素
     let id = Number($event.dataTransfer.getData('Text'));
     let boardElement = this.pageDrawService.getCurrentBoardELementById(id);
+    if (!boardElement) {
+      this.utilService.openErrorModal(this.prompt.ERROR_BOARDELEMENT_DRAG);
+      return;
+    }
     // 更新偏移量
     this.pageDrawService.calcOffsetDragAxis($event, boardElement);
     boardElement.top = this.pageDrawService.offsetAxis.y;

@@ -1,3 +1,4 @@
+import { PageService } from './../page.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BoardElement } from './../../model/boardElement';
@@ -68,8 +69,9 @@ export class PageDrawComponent implements OnInit, AfterViewInit {
   }
 
   delete () {
-    if (this.boardElement) {
-      this.pageDrawService.destoryElementById(this.boardElement.id);
+    let currentBoardElement = this.pageDrawService.currentBoardElement;
+    if (currentBoardElement) {
+      this.pageDrawService.destoryElementById(currentBoardElement.id);
       this.boardElement = null;
     } else {
       this.utilService.openErrorModal(this.prompt.ERROR_BOARDELEMENT_NOCREATE)

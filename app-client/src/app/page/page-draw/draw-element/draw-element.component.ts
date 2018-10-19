@@ -22,10 +22,9 @@ export class DrawElementComponent implements OnInit {
   // 显示控制元素形状面板
   showControlPanel (): void {
     this.showControl = !this.showControl;
-    // this.pageDrawService.destoryElementById(this.boardElement.id);
-  }
-  updateBoardElementStyle (): void {
-    this.boardElementStyle = this.pageDrawService.addPxUnit(this.boardElement);
+    if (this.showControl) {
+      this.pageDrawService.updateCurrentBoardElement(this.boardElement);
+    }
   }
   dragStart ($event: DragEvent) {
     this.pageDrawService.saveDragAxis($event);
