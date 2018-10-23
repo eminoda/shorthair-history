@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const is = require('is-type-of');
+const entend = require('extend2');
 const baseDir = path.resolve(__dirname, '../../');
 export default {
     loadFile(filepath, ...inject) {
@@ -9,9 +10,8 @@ export default {
             return null;
         }
         let ret = this.requireFile(filepath);
-        if (is.function(ret) && !is.class(ret)) {
-            ret = ret(...inject);
-        }
+        console.log(ret);
+        ret = entend(true, ret, ...inject);
         console.log(ret);
         return ret;
     },
