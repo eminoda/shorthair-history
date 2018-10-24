@@ -1,20 +1,42 @@
-const fs = require('fs');
+'use strict';
 const path = require('path');
-const is = require('is-type-of');
-const entend = require('extend2');
-const baseDir = path.resolve(__dirname, '../../');
-export default {
+const fs = require('fs');
+const extend = require('extend2');
+/**
+ * 参考egg Loader
+ * 加载各类文件，整合并使用其方法
+ */
+// TODO:如何定义index.d.ts
+const loaders = [
+    require('./mixin/config')
+]
+
+class Loader {
+    constructor(options = {}) {
+        this.baseDir = options.baseDir || process.cwd();
+        for (const loader of loaders) {
+            Object.assign(Loader.prototype, loader);
+        }
+    }
+    resolveModule(filePath) {
+        let fullPath;
+        try {
+            // skill
+            fullPath = require.resolve(filePath);
+        } catch (e) {
+            return '';
+        }
+        return fullPath;
+    }
     loadFile(filepath, ...inject) {
-        filepath = path.resolve(baseDir, filepath);
         if (!filepath || !fs.existsSync(filepath)) {
+            console.log(2);
             return null;
         }
         let ret = this.requireFile(filepath);
-        console.log(ret);
-        ret = entend(true, ret, ...inject);
-        console.log(ret);
+        ret = extend(true, ret, ...inject);
         return ret;
-    },
+    }
     requireFile(filepath) {
         try {
             // if not js module, just return content buffer
@@ -34,3 +56,7 @@ export default {
         }
     }
 }
+
+
+
+export default Loader;

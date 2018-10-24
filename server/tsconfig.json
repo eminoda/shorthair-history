@@ -23,7 +23,7 @@
         "importHelpers": true
     },
     "include": [
-        "./src", "config/config.default.js",
+        "./src", "config/config.default.js"
     ],
     "exclude": [
         "node_modules*"
