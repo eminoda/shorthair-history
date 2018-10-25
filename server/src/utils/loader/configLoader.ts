@@ -1,9 +1,9 @@
-"use strict";
+import Loader from "./loader";
 const path = require('path');
-const fs = require('fs');
 const extend = require('extend2');
-const debug = require('debug')('util-loader-mix-config');
-module.exports = {
+const debug = require('debug')('util-loader-config');
+
+class ConfigLoader extends Loader {
     loadConfig() {
         const target = {};
         for (const filename of this.getTypeFiles('config')) {
@@ -12,8 +12,8 @@ module.exports = {
             extend(true, target, config);
         }
         debug('loadConfig config %j', target);
-        this.config = target;
-    },
+        super.config = target;
+    }
     /**
      * 加载配置文件，返回配置数据
      * @param dirpath 路径
@@ -22,7 +22,8 @@ module.exports = {
      */
     _loadConfig(dirpath, filename, extraInject) {
         // server\config\config.default
-        let filepath = this.resolveModule(path.join(dirpath, 'config', filename));
-        return this.loadFile(filepath, extraInject);
+        let filepath = super.resolveModule(path.join(dirpath, 'config', filename));
+        return super.loadFile(filepath, extraInject);
     }
-};
+}
+export default ConfigLoader;

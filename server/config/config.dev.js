@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-    test1: 111
+    test2: 222
 };

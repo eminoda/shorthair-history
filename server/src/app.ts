@@ -1,11 +1,10 @@
 import * as Koa from 'koa';
 import router from './router';
 import middleware from './middleware';
-import Loader from './utils/loader';
-
+import ConfigLoader from './utils/loader/configLoader';
 let app = new Koa();
 
-new Loader().loadConfig()
+new ConfigLoader().loadConfig();
 
 app.use(middleware);
 

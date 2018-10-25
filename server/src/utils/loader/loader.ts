@@ -1,4 +1,5 @@
-'use strict';
+import { LoaderOptions } from '../../interfaces/utils';
+const debug = require('debug')('util-loader');
 const path = require('path');
 const fs = require('fs');
 const extend = require('extend2');
@@ -6,17 +7,34 @@ const extend = require('extend2');
  * 参考egg Loader
  * 加载各类文件，整合并使用其方法
  */
-// TODO:如何定义index.d.ts
 const loaders = [
     require('./mixin/config')
 ]
-
 class Loader {
-    constructor(options = {}) {
+    baseDir;
+    serverEnv;
+    config;
+    constructor(options: LoaderOptions = {}) {
         this.baseDir = options.baseDir || process.cwd();
-        for (const loader of loaders) {
-            Object.assign(Loader.prototype, loader);
+        this.serverEnv = this.getServerEnv();
+    }
+    // 加载 config 目录下配置文件
+    getTypeFiles(filename) {
+        const files = [`${filename}.default`];
+        if (this.serverEnv === 'default') return files;
+        files.push(`${filename}.${this.serverEnv}`);
+        debug('getTypeFiles %j', files);
+        return files;
+    }
+    getServerEnv() {
+        let serverEnv = process.env.SERVER_ENV;
+        if (process.env.NODE_ENV === 'production') {
+            serverEnv = 'prod';
+        } else {
+            serverEnv = 'dev';
         }
+        debug('serverEnv %j', serverEnv);
+        return serverEnv;
     }
     resolveModule(filePath) {
         let fullPath;
@@ -30,7 +48,6 @@ class Loader {
     }
     loadFile(filepath, ...inject) {
         if (!filepath || !fs.existsSync(filepath)) {
-            console.log(2);
             return null;
         }
         let ret = this.requireFile(filepath);
@@ -58,5 +75,8 @@ class Loader {
 }
 
 
+for (const loader of loaders) {
+    Object.assign(Loader.prototype, loader);
+}
 
 export default Loader;

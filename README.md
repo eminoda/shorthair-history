@@ -32,7 +32,7 @@
 待解决问题
 
 技术选型
-- [x] 框架：Koa+Angular6.0
+- [x] 框架：Koa(参考egg)+Angular6.0
 - [x] UI：NG-ZORRO
 - [ ] 数据库：mongo
 
@@ -54,6 +54,10 @@
 域名解析
 - [ ] Node or Nginx解析选型
 - [ ] 多业务线解析规则
+
+服务端
+- [ ] 环境配置信息加载
+
 
 其他
 - [ ] logger

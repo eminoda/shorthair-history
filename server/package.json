@@ -7,6 +7,7 @@
     "shorthair": "www.js"
   },
   "dependencies": {
+    "debug": "^4.1.0",
     "extend2": "^1.0.0",
     "is-type-of": "^1.2.1",
     "koa": "^2.5.3",
@@ -22,7 +23,7 @@
     "typescript": "^3.0.3"
   },
   "scripts": {
-    "start": "supervisor node ./bin/www.js",
+    "start": "set DEBUG=*,-koa* & supervisor SERVER_ENV=development node ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "eminoda",
