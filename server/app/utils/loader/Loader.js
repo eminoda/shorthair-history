@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const debug = require('debug')('util-loader');
+const debug = require('debug')('Loader');
 const path = require('path');
 const fs = require('fs');
 const extend = require('extend2');
@@ -13,6 +13,7 @@ const loaders = [
 ];
 class Loader {
     constructor(options = {}) {
+        debug('init');
         this.baseDir = options.baseDir || process.cwd();
         this.serverEnv = this.getServerEnv();
     }

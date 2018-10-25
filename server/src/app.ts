@@ -2,10 +2,12 @@ import * as Koa from 'koa';
 import router from './router';
 import middleware from './middleware';
 import ConfigLoader from './utils/loader/configLoader';
-let app = new Koa();
+import { AppKoa } from './interfaces/appKoa';
+let app = new Koa() as AppKoa;
 
-new ConfigLoader().loadConfig();
+app.context.db = new ConfigLoader().loadConfig();
 
+console.log(app.context.db);
 app.use(middleware);
 
 app.use(router.routes())

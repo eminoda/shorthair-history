@@ -4,7 +4,7 @@ const extend = require('extend2');
 const debug = require('debug')('util-loader-config');
 
 class ConfigLoader extends Loader {
-    loadConfig() {
+    loadConfig(): any {
         const target = {};
         for (const filename of this.getTypeFiles('config')) {
             // 相同属性会覆盖
@@ -13,6 +13,7 @@ class ConfigLoader extends Loader {
         }
         debug('loadConfig config %j', target);
         super.config = target;
+        return target;
     }
     /**
      * 加载配置文件，返回配置数据

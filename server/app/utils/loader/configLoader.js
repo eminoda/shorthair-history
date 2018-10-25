@@ -14,6 +14,7 @@ class ConfigLoader extends loader_1.default {
         }
         debug('loadConfig config %j', target);
         super.config = target;
+        return target;
     }
     /**
      * 加载配置文件，返回配置数据

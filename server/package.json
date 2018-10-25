@@ -9,12 +9,14 @@
   "dependencies": {
     "debug": "^4.1.0",
     "extend2": "^1.0.0",
+    "globby": "^8.0.1",
     "is-type-of": "^1.2.1",
     "koa": "^2.5.3",
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
     "koa-onerror": "^4.1.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.3.6"
   },
   "devDependencies": {
     "@types/koa-bodyparser": "^5.0.1",
