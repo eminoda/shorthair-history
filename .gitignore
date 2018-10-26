@@ -4,3 +4,4 @@
 /server/package-lock.json
 /server/config/config.dev.js
 /server/config/config.prod.js
+/server/app

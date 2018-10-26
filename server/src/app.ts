@@ -5,7 +5,8 @@ import ConfigLoader from './utils/loader/configLoader';
 import { AppKoa } from './interfaces/appKoa';
 let app = new Koa() as AppKoa;
 
-app.context.db = new ConfigLoader().loadConfig();
+let gobalConfig = new ConfigLoader().loadConfig();
+app.context.db = gobalConfig.mongo;
 
 console.log(app.context.db);
 app.use(middleware);
