@@ -7,6 +7,7 @@
     "shorthair": "www.js"
   },
   "dependencies": {
+    "@types/mongoose": "^5.2.20",
     "debug": "^4.1.0",
     "extend2": "^1.0.0",
     "globby": "^8.0.1",

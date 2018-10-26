@@ -1,14 +1,14 @@
 import * as Koa from 'koa';
 import router from './router';
 import middleware from './middleware';
-import ConfigLoader from './utils/loader/configLoader';
+import { handle } from './utils/handle';
 import { AppKoa } from './interfaces/appKoa';
-let app = new Koa() as AppKoa;
 
-let gobalConfig = new ConfigLoader().loadConfig();
-app.context.db = gobalConfig.mongo;
+let app = <AppKoa>new Koa();
 
-console.log(app.context.db);
+handle.getAppConfig(app);
+handle.connectDB(app);
+
 app.use(middleware);
 
 app.use(router.routes())

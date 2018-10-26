@@ -12,5 +12,6 @@ export default async (ctx, next) => {
             status: false,
             error: err.message
         };
+        console.log(err);
     }
 };
